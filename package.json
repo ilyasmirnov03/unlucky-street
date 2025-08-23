@@ -1,0 +1,31 @@
+{
+  "name": "unlucky-street",
+  "version": "1.0.0",
+  "description": "Video game for the JS13K Games 2025 contest.",
+  "keywords": [
+    "js13kgames",
+    "video-game"
+  ],
+  "homepage": "https://github.com/ilyasmirnov03/unlucky-street#readme",
+  "bugs": {
+    "url": "https://github.com/ilyasmirnov03/unlucky-street/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ilyasmirnov03/unlucky-street.git"
+  },
+  "license": "MIT",
+  "author": "ilyasmirnov03",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "terser": "5.43.1",
+    "typescript": "5.9.2",
+    "vite": "7.1.3"
+  }
+}
