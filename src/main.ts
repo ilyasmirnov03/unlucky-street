@@ -2,8 +2,15 @@ import { GameMap } from './game-map';
 import { Player } from './player';
 import './styles.css';
 
-function render(): void {
-  requestAnimationFrame(render);
+function render(
+  ctx: CanvasRenderingContext2D,
+  player: Player,
+  gameMap: GameMap,
+): void {
+  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  gameMap.update();
+  player.update();
+  requestAnimationFrame(render.bind(this, ctx, player, gameMap));
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -14,8 +21,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const gameMap = new GameMap(context);
   gameMap.generateNewMap();
-  new Player(context, gameMap);
+  const player = new Player(context, gameMap);
 
-  render();
+  render(context, player, gameMap);
 });
 

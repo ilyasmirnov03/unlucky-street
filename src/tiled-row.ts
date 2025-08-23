@@ -11,6 +11,10 @@ export class TiledRow {
 
   public width: number;
 
+  private color: string;
+
+  private ctx: CanvasRenderingContext2D;
+
   public constructor(
     ctx: CanvasRenderingContext2D,
     height: number,
@@ -20,9 +24,15 @@ export class TiledRow {
     this.y = y;
     this.height = height;
     this.width = ctx.canvas.width;
+    this.color = color;
+    this.ctx = ctx;
 
-    ctx.fillStyle = color;
-    ctx.fillRect(0, y, ctx.canvas.width, height);
+    this.render();
+  }
+
+  public render(): void {
+    this.ctx.fillStyle = this.color;
+    this.ctx.fillRect(0, this.y, this.ctx.canvas.width, this.height);
   }
 }
 

@@ -34,4 +34,10 @@ export class GameMap {
     this.currentRow = this.rows[0];
   }
 
+  public update(): void {
+    for (const row of this.rows) {
+      row.render();
+    }
+  }
+
 }

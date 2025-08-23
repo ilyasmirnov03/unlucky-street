@@ -51,10 +51,10 @@ export class Player {
     let dx = 0;
 
     if (this.pressedKeys.has('left')) {
-      dx += 1;
+      dx -= 1;
     }
     if (this.pressedKeys.has('right')) {
-      dx -= 1;
+      dx += 1;
     }
 
     this.x += dx * this.speed;
