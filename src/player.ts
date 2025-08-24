@@ -57,7 +57,12 @@ export class Player {
       dx += 1;
     }
 
-    this.x += dx * this.speed;
+    const nextX = this.x + dx * this.speed;
+
+    // Screen collisions
+    if (nextX >= 0 && nextX <= this.ctx.canvas.offsetWidth - 100) {
+      this.x = nextX;
+    }
 
     this.render();
   }
