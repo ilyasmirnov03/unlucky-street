@@ -1,4 +1,6 @@
 import { GameMap } from './game-map';
+import { ImageStorage } from './image-storage';
+import { loadImages } from './load';
 import { Player } from './player';
 import './styles.css';
 
@@ -13,11 +15,15 @@ function render(
   requestAnimationFrame(render.bind(this, ctx, player, gameMap));
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  const images = await loadImages();
+  ImageStorage.obstacles = images;
+
   const canvas = document.querySelector('canvas') as HTMLCanvasElement;
   canvas.width = document.body.offsetWidth;
   canvas.height = document.body.offsetHeight;
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
+  context.imageSmoothingEnabled = false;
 
   const gameMap = new GameMap(context);
   gameMap.generateNewMap();
