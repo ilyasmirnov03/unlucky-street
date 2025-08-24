@@ -1,6 +1,6 @@
 import { GameMap } from './game-map';
 import { ImageStorage } from './image-storage';
-import { loadImages } from './load';
+import { loadObstacleAssets, loadPlayerAssets } from './load';
 import { Player } from './player';
 import './styles.css';
 
@@ -16,8 +16,10 @@ function render(
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
-  const images = await loadImages();
+  const images = await loadObstacleAssets();
+  const playerAssets = await loadPlayerAssets();
   ImageStorage.obstacles = images;
+  ImageStorage.playerImages = playerAssets;
 
   const canvas = document.querySelector('canvas') as HTMLCanvasElement;
   canvas.width = document.body.offsetWidth;

@@ -1,4 +1,5 @@
 import { GameMap } from "./game-map";
+import { ImageStorage } from "./image-storage";
 
 /**
  * Class to manage player functionnality.
@@ -43,8 +44,19 @@ export class Player {
   }
 
   public render(): void {
-    this.ctx.fillStyle = 'white';
-    this.ctx.fillRect(this.x, this.y, 100, 100);
+    const img = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
+    const spriteW = 96;
+    const spriteH = 96;
+    this.ctx.save();
+
+    if (this.pressedKeys.has('left')) {
+      this.ctx.scale(-1, 1);
+      this.ctx.drawImage(img, 0, 0, 16, 16, -this.x - spriteW, this.y, spriteW, spriteH);
+    } else {
+      this.ctx.drawImage(img, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
+    }
+
+    this.ctx.restore();
   }
 
   public update(): void {
@@ -52,8 +64,7 @@ export class Player {
 
     if (this.pressedKeys.has('left')) {
       dx -= 1;
-    }
-    if (this.pressedKeys.has('right')) {
+    } else if (this.pressedKeys.has('right')) {
       dx += 1;
     }
 

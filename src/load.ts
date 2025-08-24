@@ -1,4 +1,4 @@
-export async function loadImages(): Promise<HTMLImageElement[]> {
+export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
   const imagePromises: Promise<HTMLImageElement>[] = [];
 
   // Obstacles
@@ -15,3 +15,21 @@ export async function loadImages(): Promise<HTMLImageElement[]> {
   return Promise.all(imagePromises);
 }
 
+export async function loadPlayerAssets(): Promise<Map<string, HTMLImageElement>> {
+  const catImages = ['side-cat'];
+  const imagesMap = new Map<string, HTMLImageElement>();
+  const imagePromises: Promise<HTMLImageElement>[] = [];
+
+  for (const cat of catImages) {
+    const image = new Image(16, 16);
+    image.src = `/assets/player/${cat}.png`;
+    imagesMap.set(cat, image);
+    imagePromises.push(new Promise((resolve, reject) => {
+      image.onload = () => resolve(image);
+      image.onerror = () => reject();
+    }));
+  }
+
+  await Promise.all(imagePromises);
+  return imagesMap;
+}
