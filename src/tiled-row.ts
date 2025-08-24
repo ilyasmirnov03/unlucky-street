@@ -11,7 +11,7 @@ export class TiledRow {
 
   public width: number;
 
-  private color: string;
+  public color: string;
 
   private ctx: CanvasRenderingContext2D;
 

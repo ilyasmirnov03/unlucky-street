@@ -62,10 +62,15 @@ export class Player {
     this.render();
   }
 
+  private goToNextRow(): void {
+    this.gameMap.onNextRow(this.gameMap.getNextRow());
+  }
+
   private handleDownKey(e: KeyboardEvent): void {
     switch (e.code) {
       case 'KeyW':
       case 'ArrowUp':
+        this.goToNextRow();
         break;
       case 'KeyA':
       case 'ArrowLeft':
@@ -80,9 +85,6 @@ export class Player {
 
   private handleUpKey(e: KeyboardEvent): void {
     switch (e.code) {
-      case 'KeyW':
-      case 'ArrowUp':
-        break;
       case 'KeyA':
       case 'ArrowLeft':
         this.pressedKeys.delete('left');
