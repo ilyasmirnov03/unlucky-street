@@ -24,6 +24,10 @@ export class GameMap {
         rowHeight * index,
         color,
       );
+      // Do not spawn humans on rows close to the player at the start
+      if (i > 3) {
+        tiledRow.generateHumans();
+      }
       this.rows.push(tiledRow);
     }
     this.currentRow = this.rows[1];
@@ -46,6 +50,8 @@ export class GameMap {
     );
     this.rows.push(newRow);
     this.updateRowsYCoordinate();
+    newRow.generateHumans();
+    removedRow.destroy();
   }
 
   public update(): void {

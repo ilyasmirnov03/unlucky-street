@@ -1,6 +1,8 @@
 import { GameSettings } from "./game-settings";
+import { Human } from "./human";
 import { ImageStorage } from "./image-storage";
 import { Obstacle } from "./obstacle";
+import { randomNumberBetween, shouldWithChance, weightedRandom } from "./random-utils";
 
 /**
  * A row on the game map with tiles.
@@ -18,6 +20,8 @@ export class TiledRow {
   public color: string;
 
   private obstacles: Obstacle[] = [];
+
+  private humans: Human[] = [];
 
   public constructor(
     height: number,
@@ -45,11 +49,41 @@ export class TiledRow {
     }
   }
 
+  public generateHumans(): void {
+    const weights = {
+      1: 0.5,
+      2: 0.3,
+      3: 0.2,
+    }
+    const humansAmount = weightedRandom(weights);
+
+    for (let i = 0; i < humansAmount; i++) {
+      this.humans.push(new Human({
+        row: this,
+        direction: shouldWithChance(0.5) ? -1 : 1,
+        speed: randomNumberBetween(1, 2),
+        x: Math.round(randomNumberBetween(-96, GameSettings.canvas.offsetWidth)),
+      }));
+    }
+  }
+
   public render(): void {
     GameSettings.context.fillStyle = this.color;
     GameSettings.context.fillRect(0, this.y, GameSettings.canvas.width, this.height);
     for (const obstacle of this.obstacles) {
       obstacle.render();
+    }
+    for (const human of this.humans) {
+      human.render();
+    }
+  }
+
+  /**
+   * Clear the object
+   */
+  public destroy(): void {
+    for (const h of this.humans) {
+      h.onDestroy();
     }
   }
 }
