@@ -16,7 +16,7 @@ export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
 }
 
 export async function loadPlayerAssets(): Promise<Map<string, HTMLImageElement>> {
-  const catImages = ['side-cat'];
+  const catImages = ['back-cat', 'side-cat'];
   const imagesMap = new Map<string, HTMLImageElement>();
   const imagePromises: Promise<HTMLImageElement>[] = [];
 

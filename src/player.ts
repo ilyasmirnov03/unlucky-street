@@ -39,14 +39,17 @@ export class Player {
   }
 
   public render(): void {
-    const img = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
+    const img = ImageStorage.playerImages.get('back-cat') as HTMLImageElement;
+    const sideImg = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
     const spriteW = 96;
     const spriteH = 96;
     GameSettings.context.save();
 
     if (this.pressedKeys.has('left')) {
       GameSettings.context.scale(-1, 1);
-      GameSettings.context.drawImage(img, 0, 0, 16, 16, -this.x - spriteW, this.y, spriteW, spriteH);
+      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, -this.x - spriteW, this.y, spriteW, spriteH);
+    } else if (this.pressedKeys.has('right')) {
+      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
     } else {
       GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
     }
