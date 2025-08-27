@@ -19,18 +19,20 @@ export class GameMap {
   }
 
   public generateNewMap(): void {
-    const rowHeight = this.ctx.canvas.height / 8;
-    for (let i = 0; i < 8; i++) {
+    const rowsAmount = 8;
+    const rowHeight = this.ctx.canvas.height / rowsAmount;
+    for (let i = 0; i < rowsAmount; i++) {
       const color = i % 2 === 0 ? 'gray' : 'black';
+      const index = rowsAmount - i - 1;
       const tiledRow = new TiledRow(
         this.ctx,
         rowHeight,
-        rowHeight * i,
+        rowHeight * index,
         color,
       );
       this.rows.push(tiledRow);
     }
-    this.currentRow = this.rows[this.rows.length - 1];
+    this.currentRow = this.rows[1];
   }
 
   public getNextRow(): TiledRow {
@@ -61,7 +63,8 @@ export class GameMap {
 
   private updateRowsYCoordinate(): void {
     for (const [i, row] of this.rows.entries()) {
-      row.y = i * row.height;
+      const index = this.rows.length - i - 1;
+      row.y = index * row.height;
     }
   }
 
