@@ -1,4 +1,5 @@
 import { GameSettings } from './game-settings';
+import { Player } from './player';
 import { TiledRow } from './tiled-row';
 
 /**
@@ -34,13 +35,20 @@ export class GameMap {
   }
 
   public getNextRow(): TiledRow {
-    return this.rows[this.rows.length - 2];
+    return this.rows[2];
   }
 
   /**
    * Method to be called when the current row must be changed
    */
-  public onNextRow(row: TiledRow): void {
+  public onNextRow(player: Player, row: TiledRow): void {
+    console.debug('Going to next row:', row);
+    const isIntersecting = row.isIntersectingWithAnyObstacleOnX(player.x);
+    console.debug('Is player intersecting with obstacles on next row?', isIntersecting);
+    if (isIntersecting) {
+      return;
+    }
+
     const removedRow = this.rows.shift() as TiledRow;
     this.currentRow = row;
     const newRow = new TiledRow(

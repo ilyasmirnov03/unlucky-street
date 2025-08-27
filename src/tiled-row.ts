@@ -2,6 +2,7 @@ import { GameSettings } from "./game-settings";
 import { Human } from "./human";
 import { ImageStorage } from "./image-storage";
 import { Obstacle } from "./obstacle";
+import { Player } from "./player";
 import { randomNumberBetween, shouldWithChance, weightedRandom } from "./random-utils";
 
 /**
@@ -50,6 +51,16 @@ export class TiledRow {
       });
       this.obstacles.push(obstacle);
     }
+  }
+
+  public isIntersectingWithAnyObstacleOnX(x: number): boolean {
+    for (const obstacle of this.obstacles) {
+      if (x <= obstacle.x + 96 && x >= obstacle.x - 96) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   public generateHumans(): void {

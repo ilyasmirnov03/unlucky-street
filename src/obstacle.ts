@@ -12,7 +12,7 @@ interface ObstacleInterface {
  */
 export class Obstacle {
 
-  private x: number;
+  public x: number;
 
   private image: HTMLImageElement;
 

@@ -65,8 +65,13 @@ export class Player {
 
     const nextX = this.x + dx * this.speed;
 
+    const isIntersectingWithObstacles = this.gameMap.currentRow?.isIntersectingWithAnyObstacleOnX(nextX);
+
     // Screen collisions
-    if (nextX >= 0 && nextX <= GameSettings.canvas.offsetWidth - 100) {
+    if (
+      (nextX >= 0 && nextX <= GameSettings.canvas.offsetWidth - 100) &&
+      !isIntersectingWithObstacles
+    ) {
       this.x = nextX;
     }
 
@@ -74,7 +79,7 @@ export class Player {
   }
 
   private goToNextRow(): void {
-    this.gameMap.onNextRow(this.gameMap.getNextRow());
+    this.gameMap.onNextRow(this, this.gameMap.getNextRow());
   }
 
   private handleDownKey(e: KeyboardEvent): void {
