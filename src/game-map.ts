@@ -1,11 +1,10 @@
+import { GameSettings } from './game-settings';
 import { TiledRow } from './tiled-row';
 
 /**
  * Representation of the game's map.
  */
 export class GameMap {
-
-  private ctx: CanvasRenderingContext2D;
 
   private rows: TiledRow[] = [];
 
@@ -14,18 +13,13 @@ export class GameMap {
    */
   public currentRow: TiledRow | null = null;
 
-  public constructor(ctx: CanvasRenderingContext2D) {
-    this.ctx = ctx;
-  }
-
   public generateNewMap(): void {
     const rowsAmount = 8;
-    const rowHeight = this.ctx.canvas.height / rowsAmount;
+    const rowHeight = GameSettings.canvas.height / rowsAmount;
     for (let i = 0; i < rowsAmount; i++) {
       const color = i % 2 === 0 ? 'gray' : 'black';
       const index = rowsAmount - i - 1;
       const tiledRow = new TiledRow(
-        this.ctx,
         rowHeight,
         rowHeight * index,
         color,
@@ -46,7 +40,6 @@ export class GameMap {
     const removedRow = this.rows.shift() as TiledRow;
     this.currentRow = row;
     const newRow = new TiledRow(
-      this.ctx,
       row.height,
       0,
       removedRow.color,

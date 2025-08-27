@@ -1,3 +1,4 @@
+import { GameSettings } from './game-settings';
 import { TiledRow } from './tiled-row';
 
 /**
@@ -5,23 +6,20 @@ import { TiledRow } from './tiled-row';
  */
 export class Obstacle {
 
-  private ctx: CanvasRenderingContext2D;
-
   private x: number;
 
   private image: HTMLImageElement;
 
   private row: TiledRow;
 
-  constructor(ctx: CanvasRenderingContext2D, x: number, image: HTMLImageElement, tiledRow: TiledRow) {
-    this.ctx = ctx;
+  constructor(x: number, image: HTMLImageElement, tiledRow: TiledRow) {
     this.x = x;
     this.image = image;
     this.row = tiledRow;
   }
 
   public render(): void {
-    this.ctx.drawImage(
+    GameSettings.context.drawImage(
       this.image,
       0, 0, 16, 16,
       this.x, this.row.y, 96, 96

@@ -1,4 +1,5 @@
 import { GameMap } from './game-map';
+import { GameSettings } from './game-settings';
 import { ImageStorage } from './image-storage';
 import { loadObstacleAssets, loadPlayerAssets } from './load';
 import { Player } from './player';
@@ -26,10 +27,12 @@ window.addEventListener('DOMContentLoaded', async () => {
   canvas.height = document.body.offsetHeight;
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
   context.imageSmoothingEnabled = false;
+  GameSettings.canvas = canvas;
+  GameSettings.context = context;
 
-  const gameMap = new GameMap(context);
+  const gameMap = new GameMap();
   gameMap.generateNewMap();
-  const player = new Player(context, gameMap);
+  const player = new Player(gameMap);
 
   render(context, player, gameMap);
 });

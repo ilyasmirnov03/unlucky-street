@@ -1,12 +1,11 @@
 import { GameMap } from "./game-map";
+import { GameSettings } from "./game-settings";
 import { ImageStorage } from "./image-storage";
 
 /**
  * Class to manage player functionnality.
  */
 export class Player {
-
-  private ctx: CanvasRenderingContext2D;
 
   private gameMap: GameMap;
 
@@ -18,11 +17,7 @@ export class Player {
 
   private speed = 2;
 
-  constructor(
-    ctx: CanvasRenderingContext2D,
-    gameMap: GameMap,
-  ) {
-    this.ctx = ctx;
+  constructor(gameMap: GameMap) {
     this.gameMap = gameMap;
 
     // Center player model
@@ -47,16 +42,16 @@ export class Player {
     const img = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
     const spriteW = 96;
     const spriteH = 96;
-    this.ctx.save();
+    GameSettings.context.save();
 
     if (this.pressedKeys.has('left')) {
-      this.ctx.scale(-1, 1);
-      this.ctx.drawImage(img, 0, 0, 16, 16, -this.x - spriteW, this.y, spriteW, spriteH);
+      GameSettings.context.scale(-1, 1);
+      GameSettings.context.drawImage(img, 0, 0, 16, 16, -this.x - spriteW, this.y, spriteW, spriteH);
     } else {
-      this.ctx.drawImage(img, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
+      GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
     }
 
-    this.ctx.restore();
+    GameSettings.context.restore();
   }
 
   public update(): void {
@@ -71,7 +66,7 @@ export class Player {
     const nextX = this.x + dx * this.speed;
 
     // Screen collisions
-    if (nextX >= 0 && nextX <= this.ctx.canvas.offsetWidth - 100) {
+    if (nextX >= 0 && nextX <= GameSettings.canvas.offsetWidth - 100) {
       this.x = nextX;
     }
 
