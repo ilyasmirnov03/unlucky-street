@@ -38,13 +38,16 @@ export class TiledRow {
   }
 
   private generateRandomObstacles(): void {
-    const tileSize = this.width / 8;
     const tilesAmount = Math.round(Math.random() * 2);
 
     for (let i = 0; i < tilesAmount; i++) {
       const obstacleNumber = Math.round(Math.random() * (ImageStorage.obstacles.length - 1));
       const obstacleImage = ImageStorage.obstacles[obstacleNumber];
-      const obstacle = new Obstacle(tileSize * i, obstacleImage, this);
+      const obstacle = new Obstacle({
+        x: randomNumberBetween(0, GameSettings.canvas.offsetWidth - 96),
+        image: obstacleImage,
+        row: this,
+      });
       this.obstacles.push(obstacle);
     }
   }

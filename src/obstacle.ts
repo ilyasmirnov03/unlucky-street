@@ -1,6 +1,12 @@
 import { GameSettings } from './game-settings';
 import { TiledRow } from './tiled-row';
 
+interface ObstacleInterface {
+  x: number;
+  image: HTMLImageElement;
+  row: TiledRow;
+}
+
 /**
  * Any in-game obstacle
  */
@@ -12,10 +18,10 @@ export class Obstacle {
 
   private row: TiledRow;
 
-  constructor(x: number, image: HTMLImageElement, tiledRow: TiledRow) {
-    this.x = x;
-    this.image = image;
-    this.row = tiledRow;
+  constructor(obstacleObj: ObstacleInterface) {
+    this.x = obstacleObj.x;
+    this.image = obstacleObj.image;
+    this.row = obstacleObj.row;
   }
 
   public render(): void {
