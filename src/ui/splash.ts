@@ -1,3 +1,4 @@
+import { Camera } from "../camera";
 import { GameSettings } from "../game-settings";
 
 export interface SplashText {
@@ -15,7 +16,7 @@ export class Splash {
 
   public static update(): void {
     for (const splash of this.splashes) {
-      GameSettings.context.fillText(splash.text, splash.x, splash.y);
+      GameSettings.context.fillText(splash.text, splash.x, Camera.worldYToScreen(splash.y, 0));
     }
   }
 
