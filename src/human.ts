@@ -1,3 +1,4 @@
+import { Camera } from "./camera";
 import { GameSettings } from "./game-settings";
 import { TiledRow } from "./tiled-row";
 
@@ -77,7 +78,7 @@ export class Human {
     GameSettings.context.fillStyle = 'white';
     GameSettings.context.fillRect(
       this.x,
-      this.row.y,
+      Camera.worldYToScreen(this.row.y, this.row.height),
       96,
       128
     );

@@ -1,3 +1,4 @@
+import { Camera } from './camera';
 import { GameSettings } from './game-settings';
 import { TiledRow } from './tiled-row';
 
@@ -28,7 +29,7 @@ export class Obstacle {
     GameSettings.context.drawImage(
       this.image,
       0, 0, 16, 16,
-      this.x, this.row.y, 96, 96
+      this.x, Camera.worldYToScreen(this.row.y, this.row.height), 96, 96
     );
   }
 }

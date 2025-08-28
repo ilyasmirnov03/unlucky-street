@@ -1,3 +1,4 @@
+import { Camera } from "./camera";
 import { GameSettings } from "./game-settings";
 import { Human } from "./human";
 import { ImageStorage } from "./image-storage";
@@ -88,18 +89,21 @@ export class TiledRow {
       // Close cross, maximum points
       if (x <= human.x + 150 && x >= human.x - 150) {
         console.debug('Displaying text at:', human.x, human.row.y);
+        const y = Camera.worldYToScreen(human.row.y, 0);
         Splash.showForTime({
           text: 'Crossed road!',
           x: human.x,
-          y: human.row.y,
+          y,
         }, 2000);
       }
     }
   }
 
   public render(): void {
+    const y = -this.y + Camera.y - this.height;
+
     GameSettings.context.fillStyle = this.color;
-    GameSettings.context.fillRect(0, this.y, GameSettings.canvas.width, this.height);
+    GameSettings.context.fillRect(0, y, GameSettings.canvas.width, this.height);
     for (const obstacle of this.obstacles) {
       obstacle.render();
     }

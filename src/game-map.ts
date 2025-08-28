@@ -1,3 +1,4 @@
+import { Camera } from './camera';
 import { GameSettings } from './game-settings';
 import { Player } from './player';
 import { TiledRow } from './tiled-row';
@@ -19,10 +20,9 @@ export class GameMap {
     const rowHeight = GameSettings.canvas.height / rowsAmount;
     for (let i = 0; i < rowsAmount; i++) {
       const color = i % 2 === 0 ? 'gray' : 'black';
-      const index = rowsAmount - i - 1;
       const tiledRow = new TiledRow(
         rowHeight,
-        rowHeight * index,
+        rowHeight * i,
         color,
       );
       // Do not spawn humans on rows close to the player at the start
@@ -31,11 +31,14 @@ export class GameMap {
       }
       this.rows.push(tiledRow);
     }
-    this.currentRow = this.rows[1];
+    this.currentRow = this.rows[0];
+    Camera.y = GameSettings.canvas.height;
+
+    console.debug('Map generated with rows:', this.rows);
   }
 
   public getNextRow(): TiledRow {
-    return this.rows[2];
+    return this.rows[1];
   }
 
   /**
@@ -52,14 +55,14 @@ export class GameMap {
     const removedRow = this.rows.shift() as TiledRow;
     this.rows[0].checkForCrossedRoads(player.x);
 
+    const highestRow = this.rows[this.rows.length - 1];
+    const newRowY = highestRow.y + highestRow.height;
+    const newRow = new TiledRow(highestRow.height, newRowY, removedRow.color);
+    Camera.y = newRowY + row.height;
+
     this.currentRow = row;
-    const newRow = new TiledRow(
-      row.height,
-      0,
-      removedRow.color,
-    );
+    player.y = row.y;
     this.rows.push(newRow);
-    this.updateRowsYCoordinate();
     newRow.generateHumans();
     removedRow.destroy();
   }
@@ -67,13 +70,6 @@ export class GameMap {
   public update(): void {
     for (const row of this.rows) {
       row.render();
-    }
-  }
-
-  private updateRowsYCoordinate(): void {
-    for (const [i, row] of this.rows.entries()) {
-      const index = this.rows.length - i - 1;
-      row.y = index * row.height;
     }
   }
 

@@ -1,3 +1,4 @@
+import { Camera } from "./camera";
 import { GameMap } from "./game-map";
 import { GameSettings } from "./game-settings";
 import { ImageStorage } from "./image-storage";
@@ -23,8 +24,9 @@ export class Player {
     // Center player model
     if (gameMap.currentRow != null) {
       this.x = gameMap.currentRow.width / 2 - 50;
-      this.y = gameMap.currentRow.y + gameMap.currentRow.height / 2 - 50;
+      this.y = gameMap.currentRow.y; //+ gameMap.currentRow.height / 2 - 50;
     }
+    console.debug('Initial player coordinates:', this.x, this.y);
 
     document.body.addEventListener('keydown', (e) => {
       this.handleDownKey(e);
@@ -42,15 +44,17 @@ export class Player {
     const sideImg = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
     const spriteW = 96;
     const spriteH = 96;
+    const y = Camera.worldYToScreen(this.y, 100);
+
     GameSettings.context.save();
 
     if (this.pressedKeys.has('left')) {
       GameSettings.context.scale(-1, 1);
-      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, -this.x - spriteW, this.y, spriteW, spriteH);
+      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, -this.x - spriteW, y, spriteW, spriteH);
     } else if (this.pressedKeys.has('right')) {
-      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
+      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, this.x, y, spriteW, spriteH);
     } else {
-      GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, this.y, spriteW, spriteH);
+      GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, y, spriteW, spriteH);
     }
 
     GameSettings.context.restore();

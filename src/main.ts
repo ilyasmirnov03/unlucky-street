@@ -27,6 +27,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const canvas = document.querySelector('canvas') as HTMLCanvasElement;
   canvas.width = document.body.offsetWidth;
   canvas.height = document.body.offsetHeight;
+
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
   context.imageSmoothingEnabled = false;
   context.font = '32px sans-serif';
