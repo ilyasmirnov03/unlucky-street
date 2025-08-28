@@ -85,7 +85,7 @@ export class Player {
   }
 
   private goToNextRow(): void {
-    this.gameMap.onNextRow(this, this.gameMap.getNextRow());
+    this.gameMap.onNextRow(this);
   }
 
   private handleDownKey(e: KeyboardEvent): void {

@@ -89,6 +89,7 @@ export class TiledRow {
       // Close cross, maximum points
       if (x <= human.x + 150 && x >= human.x - 150) {
         console.debug('Displaying text at:', human.x, human.row.y);
+        human.color = 'rgba(255, 255, 255, 0.3)';
         Splash.showForTime({
           text: 'Crossed road!',
           x: human.x,

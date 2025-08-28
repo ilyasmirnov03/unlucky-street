@@ -16,6 +16,8 @@ export class Human {
 
   public x: number;
 
+  public color = 'white';
+
   /**
    * Movement direction where -1 is left and 1 is right
    */
@@ -75,7 +77,7 @@ export class Human {
 
   public render(): void {
     this.update();
-    GameSettings.context.fillStyle = 'white';
+    GameSettings.context.fillStyle = this.color;
     GameSettings.context.fillRect(
       this.x,
       Camera.worldYToScreen(this.row.y, this.row.height),

@@ -15,6 +15,11 @@ export class GameMap {
    */
   public currentRow: TiledRow | null = null;
 
+  /*
+   * Index of the row to go to
+   */
+  private nextRowIndex = 1;
+
   public generateNewMap(): void {
     const rowsAmount = 8;
     const rowHeight = GameSettings.canvas.height / rowsAmount;
@@ -37,31 +42,38 @@ export class GameMap {
     console.debug('Map generated with rows:', this.rows);
   }
 
-  public getNextRow(): TiledRow {
-    return this.rows[1];
-  }
-
   /**
    * Method to be called when the current row must be changed
    */
-  public onNextRow(player: Player, row: TiledRow): void {
+  public onNextRow(player: Player): void {
+    const row = this.rows[this.nextRowIndex];
     console.debug('Going to next row:', row);
+
     const isIntersecting = row.isIntersectingWithAnyObstacleOnX(player.x);
     console.debug('Is player intersecting with obstacles on next row?', isIntersecting);
     if (isIntersecting) {
       return;
     }
 
+    this.currentRow = row;
+    player.y = row.y;
+
+    if (this.nextRowIndex < 4) {
+      this.nextRowIndex++;
+      return;
+    }
+
+    const previousRow = this.rows[this.nextRowIndex - 1];
+    if (previousRow != null) {
+      previousRow.checkForCrossedRoads(player.x);
+    }
     const removedRow = this.rows.shift() as TiledRow;
-    this.rows[0].checkForCrossedRoads(player.x);
 
     const highestRow = this.rows[this.rows.length - 1];
     const newRowY = highestRow.y + highestRow.height;
     const newRow = new TiledRow(highestRow.height, newRowY, removedRow.color);
     Camera.y = newRowY + row.height;
 
-    this.currentRow = row;
-    player.y = row.y;
     this.rows.push(newRow);
     newRow.generateHumans();
     removedRow.destroy();
