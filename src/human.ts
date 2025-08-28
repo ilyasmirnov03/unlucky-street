@@ -13,14 +13,14 @@ interface HumanInterface {
  */
 export class Human {
 
-  private x: number;
+  public x: number;
 
   /**
    * Movement direction where -1 is left and 1 is right
    */
   private direction: -1 | 1;
 
-  private row: TiledRow;
+  public row: TiledRow;
 
   private speed: number;
 

@@ -26,7 +26,6 @@ export class Player {
       this.y = gameMap.currentRow.y + gameMap.currentRow.height / 2 - 50;
     }
 
-
     document.body.addEventListener('keydown', (e) => {
       this.handleDownKey(e);
     });

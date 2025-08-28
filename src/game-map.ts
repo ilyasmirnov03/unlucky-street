@@ -50,6 +50,8 @@ export class GameMap {
     }
 
     const removedRow = this.rows.shift() as TiledRow;
+    this.rows[0].checkForCrossedRoads(player.x);
+
     this.currentRow = row;
     const newRow = new TiledRow(
       row.height,

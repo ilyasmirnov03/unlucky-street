@@ -2,8 +2,8 @@ import { GameSettings } from "./game-settings";
 import { Human } from "./human";
 import { ImageStorage } from "./image-storage";
 import { Obstacle } from "./obstacle";
-import { Player } from "./player";
 import { randomNumberBetween, shouldWithChance, weightedRandom } from "./random-utils";
+import { Splash } from "./ui/splash";
 
 /**
  * A row on the game map with tiles.
@@ -78,6 +78,22 @@ export class TiledRow {
         speed: randomNumberBetween(1, 2),
         x: Math.round(randomNumberBetween(-96, GameSettings.canvas.offsetWidth)),
       }));
+    }
+  }
+
+  public checkForCrossedRoads(x: number): void {
+    for (const human of this.humans) {
+      console.debug('Human x coordinates at the time of crossing:', human.x);
+
+      // Close cross, maximum points
+      if (x <= human.x + 150 && x >= human.x - 150) {
+        console.debug('Displaying text at:', human.x, human.row.y);
+        Splash.showForTime({
+          text: 'Crossed road!',
+          x: human.x,
+          y: human.row.y,
+        }, 2000);
+      }
     }
   }
 
