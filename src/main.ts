@@ -19,20 +19,26 @@ function render(
 }
 
 window.addEventListener('DOMContentLoaded', async () => {
-  const images = await loadObstacleAssets();
-  const playerAssets = await loadPlayerAssets();
-  ImageStorage.obstacles = images;
-  ImageStorage.playerImages = playerAssets;
+  ImageStorage.obstacles = await loadObstacleAssets();
+  ImageStorage.playerImages = await loadPlayerAssets();
 
-  const canvas = document.querySelector('canvas') as HTMLCanvasElement;
+  const uiCanvas = document.getElementById('ui') as HTMLCanvasElement;
+  const canvas = document.getElementById('game') as HTMLCanvasElement;
+  uiCanvas.width = document.body.offsetWidth;
+  uiCanvas.height = document.body.offsetHeight;
   canvas.width = document.body.offsetWidth;
   canvas.height = document.body.offsetHeight;
 
+  const uiContext = uiCanvas.getContext('2d') as CanvasRenderingContext2D;
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
   context.imageSmoothingEnabled = false;
   context.font = '32px sans-serif';
+  uiContext.imageSmoothingEnabled = false;
+  uiContext.font = '32px sans-serif';
   GameSettings.canvas = canvas;
   GameSettings.context = context;
+  GameSettings.uiCanvas = uiCanvas;
+  GameSettings.uiContext = uiContext;
 
   const gameMap = new GameMap();
   gameMap.generateNewMap();

@@ -2,6 +2,7 @@ import { Camera } from "./camera";
 import { GameMap } from "./game-map";
 import { GameSettings } from "./game-settings";
 import { ImageStorage } from "./image-storage";
+import { LivesUi } from "./ui/lives";
 
 /**
  * Class to manage player functionnality.
@@ -17,6 +18,10 @@ export class Player {
   private pressedKeys = new Set<'left' | 'right'>();
 
   private speed = 2;
+
+  private isInvincible = false;
+
+  private lives = 9;
 
   constructor(gameMap: GameMap) {
     this.gameMap = gameMap;
@@ -35,6 +40,8 @@ export class Player {
     document.body.addEventListener('keyup', (e) => {
       this.handleUpKey(e);
     });
+
+    LivesUi.renderLives(this.lives);
 
     this.render();
   }
@@ -81,6 +88,13 @@ export class Player {
       this.x = nextX;
     }
 
+    if (!this.isInvincible && this.gameMap.currentRow?.isIntersectingWithAHuman(this.x)) {
+      this.lives--;
+      LivesUi.renderLives(this.lives);
+      this.isInvincible = true;
+      setTimeout(() => this.isInvincible = false, 500);
+    }
+
     this.render();
   }
 
@@ -117,4 +131,5 @@ export class Player {
         break;
     }
   }
+
 }

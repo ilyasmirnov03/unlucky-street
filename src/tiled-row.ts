@@ -64,6 +64,15 @@ export class TiledRow {
     return false;
   }
 
+  public isIntersectingWithAHuman(x: number): boolean {
+    for (const human of this.humans) {
+      if (x <= human.x + 100 && x + 100 >= human.x) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   public generateHumans(): void {
     const weights = {
       1: 0.5,

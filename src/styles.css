@@ -9,3 +9,7 @@ body {
   max-width: 720px;
   height: 100%;
 }
+
+#ui {
+  position: absolute;
+}
