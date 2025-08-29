@@ -24,11 +24,9 @@ export class GameMap {
     const rowsAmount = 8;
     const rowHeight = GameSettings.canvas.height / rowsAmount;
     for (let i = 0; i < rowsAmount; i++) {
-      const color = i % 2 === 0 ? 'gray' : 'black';
       const tiledRow = new TiledRow(
         rowHeight,
         rowHeight * i,
-        color,
       );
       // Do not spawn humans on rows close to the player at the start
       if (i > 3) {
@@ -71,7 +69,7 @@ export class GameMap {
 
     const highestRow = this.rows[this.rows.length - 1];
     const newRowY = highestRow.y + highestRow.height;
-    const newRow = new TiledRow(highestRow.height, newRowY, removedRow.color);
+    const newRow = new TiledRow(highestRow.height, newRowY);
     Camera.y = newRowY + row.height;
 
     this.rows.push(newRow);

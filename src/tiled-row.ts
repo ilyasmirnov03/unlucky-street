@@ -19,8 +19,6 @@ export class TiledRow {
 
   public width: number;
 
-  public color: string;
-
   private obstacles: Obstacle[] = [];
 
   private humans: Human[] = [];
@@ -28,12 +26,10 @@ export class TiledRow {
   public constructor(
     height: number,
     y: number,
-    color: string,
   ) {
     this.y = y;
     this.height = height;
     this.width = GameSettings.canvas.width;
-    this.color = color;
 
     this.generateRandomObstacles();
     this.render();
@@ -98,7 +94,6 @@ export class TiledRow {
       // Close cross, maximum points
       if (x <= human.x + 150 && x >= human.x - 150) {
         console.debug('Displaying text at:', human.x, human.row.y);
-        human.color = 'rgba(255, 255, 255, 0.3)';
         Splash.showForTime({
           text: 'Crossed road!',
           x: human.x,
@@ -109,10 +104,6 @@ export class TiledRow {
   }
 
   public render(): void {
-    const y = -this.y + Camera.y - this.height;
-
-    GameSettings.context.fillStyle = this.color;
-    GameSettings.context.fillRect(0, y, GameSettings.canvas.width, this.height);
     for (const obstacle of this.obstacles) {
       obstacle.render();
     }

@@ -1,7 +1,7 @@
 import { GameMap } from './game-map';
 import { GameSettings } from './game-settings';
 import { ImageStorage } from './image-storage';
-import { loadObstacleAssets, loadPlayerAssets } from './load';
+import { loadHumanAssets, loadObstacleAssets, loadPlayerAssets } from './load';
 import { Player } from './player';
 import './styles.css';
 import { Splash } from './ui/splash';
@@ -12,6 +12,8 @@ function render(
   gameMap: GameMap,
 ): void {
   ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+  ctx.fillStyle = '#3c2c6b';
+  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   gameMap.update();
   player.update();
   Splash.update();
@@ -21,6 +23,7 @@ function render(
 window.addEventListener('DOMContentLoaded', async () => {
   ImageStorage.obstacles = await loadObstacleAssets();
   ImageStorage.playerImages = await loadPlayerAssets();
+  ImageStorage.humanImages = await loadHumanAssets();
 
   const uiCanvas = document.getElementById('ui') as HTMLCanvasElement;
   const canvas = document.getElementById('game') as HTMLCanvasElement;

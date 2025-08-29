@@ -1,3 +1,26 @@
+async function getAssetsWithMap(
+  assets: string[],
+  rootPath: string,
+  width = 16,
+  height = 16,
+): Promise<Map<string, HTMLImageElement>> {
+  const imagePromises: Promise<HTMLImageElement>[] = [];
+  const imagesMap = new Map<string, HTMLImageElement>();
+
+  for (const asset of assets) {
+    const image = new Image(width, height);
+    image.src = `${rootPath}/${asset}.png`;
+    imagesMap.set(asset, image);
+    imagePromises.push(new Promise((resolve, reject) => {
+      image.onload = () => resolve(image);
+      image.onerror = (e) => reject(e);
+    }));
+  }
+
+  await Promise.all(imagePromises);
+  return imagesMap;
+}
+
 export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
   const imagePromises: Promise<HTMLImageElement>[] = [];
 
@@ -8,7 +31,7 @@ export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
     image.src = `/assets/obstacles/${obs}.png`;
     imagePromises.push(new Promise((resolve, reject) => {
       image.onload = () => resolve(image);
-      image.onerror = () => reject();
+      image.onerror = (e) => reject(e);
     }));
   }
 
@@ -17,19 +40,11 @@ export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
 
 export async function loadPlayerAssets(): Promise<Map<string, HTMLImageElement>> {
   const catImages = ['back-cat', 'side-cat'];
-  const imagesMap = new Map<string, HTMLImageElement>();
-  const imagePromises: Promise<HTMLImageElement>[] = [];
-
-  for (const cat of catImages) {
-    const image = new Image(16, 16);
-    image.src = `/assets/player/${cat}.png`;
-    imagesMap.set(cat, image);
-    imagePromises.push(new Promise((resolve, reject) => {
-      image.onload = () => resolve(image);
-      image.onerror = () => reject();
-    }));
-  }
-
-  await Promise.all(imagePromises);
-  return imagesMap;
+  return await getAssetsWithMap(catImages, '/assets/player');
 }
+
+export async function loadHumanAssets(): Promise<Map<string, HTMLImageElement>> {
+  const humanImages = ['human', 'hat1', 'hat2', 'hat3', 'hat4'];
+  return await getAssetsWithMap(humanImages, '/assets/human', 16, 32);
+}
+

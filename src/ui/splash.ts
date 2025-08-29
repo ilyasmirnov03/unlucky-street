@@ -16,6 +16,7 @@ export class Splash {
 
   public static update(): void {
     for (const splash of this.splashes) {
+      GameSettings.context.fillStyle = '#FFF';
       GameSettings.context.fillText(splash.text, splash.x, Camera.worldYToScreen(splash.y, 0));
     }
   }
