@@ -6,8 +6,4 @@ export class GameSettings {
   public static canvas: HTMLCanvasElement;
 
   public static context: CanvasRenderingContext2D;
-
-  public static uiCanvas: HTMLCanvasElement;
-
-  public static uiContext: CanvasRenderingContext2D;
 }

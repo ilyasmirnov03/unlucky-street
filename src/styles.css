@@ -11,5 +11,19 @@ body {
 }
 
 #ui {
+  padding: 6px;
   position: absolute;
+  display: flex;
+}
+
+.life {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: black;
+}
+
+.life.empty {
+  background: transparent;
+  border: 1px solid black;
 }
