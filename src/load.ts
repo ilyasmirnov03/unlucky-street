@@ -2,7 +2,7 @@ export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
   const imagePromises: Promise<HTMLImageElement>[] = [];
 
   // Obstacles
-  const obstacles = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+  const obstacles = ['1', '2', '3'];
   for (const obs of obstacles) {
     const image = new Image(16, 16);
     image.src = `/assets/obstacles/${obs}.png`;
