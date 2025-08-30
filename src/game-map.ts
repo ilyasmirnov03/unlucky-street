@@ -8,7 +8,7 @@ import { TiledRow } from './tiled-row';
  */
 export class GameMap {
 
-  private rows: TiledRow[] = [];
+  private rows: TiledRow[];
 
   /*
    * Row where the player is at right now
@@ -20,7 +20,9 @@ export class GameMap {
    */
   private nextRowIndex = 1;
 
-  public generateNewMap(): void {
+  public constructor() {
+    this.rows = [];
+
     const rowsAmount = 8;
     const rowHeight = GameSettings.canvas.height / rowsAmount;
     for (let i = 0; i < rowsAmount; i++) {

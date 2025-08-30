@@ -1,28 +1,17 @@
+import { GameLoop } from './core/game-loop';
 import { GameMap } from './game-map';
 import { GameSettings } from './game-settings';
 import { ImageStorage } from './image-storage';
 import { loadHumanAssets, loadObstacleAssets, loadPlayerAssets } from './load';
 import { Player } from './player';
 import './styles.css';
+import { DeathScreen } from './ui/death-screen';
 import { LivesUi } from './ui/lives';
-import { Splash } from './ui/splash';
-
-function render(
-  ctx: CanvasRenderingContext2D,
-  player: Player,
-  gameMap: GameMap,
-): void {
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  ctx.fillStyle = '#3c2c6b';
-  ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-  gameMap.update();
-  player.update();
-  Splash.update();
-  requestAnimationFrame(render.bind(this, ctx, player, gameMap));
-}
 
 window.addEventListener('DOMContentLoaded', async () => {
-  LivesUi.container = document.getElementById('ui') as HTMLElement;
+  const gameLoop = new GameLoop();
+  DeathScreen.init(gameLoop);
+  LivesUi.container = document.getElementById('lives') as HTMLElement;
 
   ImageStorage.obstacles = await loadObstacleAssets();
   ImageStorage.playerImages = await loadPlayerAssets();
@@ -39,9 +28,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   GameSettings.context = context;
 
   const gameMap = new GameMap();
-  gameMap.generateNewMap();
-  const player = new Player(gameMap);
+  const player = new Player(gameMap, gameLoop);
 
-  render(context, player, gameMap);
+  gameLoop.start(context, player, gameMap);
 });
 

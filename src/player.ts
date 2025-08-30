@@ -1,7 +1,9 @@
 import { Camera } from "./camera";
+import { GameLoop } from "./core/game-loop";
 import { GameMap } from "./game-map";
 import { GameSettings } from "./game-settings";
 import { ImageStorage } from "./image-storage";
+import { DeathScreen } from "./ui/death-screen";
 import { LivesUi } from "./ui/lives";
 
 /**
@@ -9,7 +11,9 @@ import { LivesUi } from "./ui/lives";
  */
 export class Player {
 
-  private gameMap: GameMap;
+  public gameMap: GameMap;
+
+  private gameLoop: GameLoop;
 
   public x = 0;
 
@@ -23,8 +27,13 @@ export class Player {
 
   private lives = 9;
 
-  constructor(gameMap: GameMap) {
+  private downKeyHandlerRef: any;
+
+  private upKeyHandlerRef: any;
+
+  constructor(gameMap: GameMap, gameLoop: GameLoop) {
     this.gameMap = gameMap;
+    this.gameLoop = gameLoop;
 
     // Center player model
     if (gameMap.currentRow != null) {
@@ -33,13 +42,11 @@ export class Player {
     }
     console.debug('Initial player coordinates:', this.x, this.y);
 
-    document.body.addEventListener('keydown', (e) => {
-      this.handleDownKey(e);
-    });
+    this.downKeyHandlerRef = this.handleDownKey.bind(this);
+    this.upKeyHandlerRef = this.handleUpKey.bind(this);
 
-    document.body.addEventListener('keyup', (e) => {
-      this.handleUpKey(e);
-    });
+    document.body.addEventListener('keydown', this.downKeyHandlerRef);
+    document.body.addEventListener('keyup', this.upKeyHandlerRef);
 
     LivesUi.renderLives(this.lives);
 
@@ -90,12 +97,21 @@ export class Player {
 
     if (!this.isInvincible && this.gameMap.currentRow?.isIntersectingWithAHuman(this.x)) {
       this.lives--;
+      if (this.lives === 0) {
+        this.gameLoop.stop();
+        DeathScreen.show();
+      }
       LivesUi.renderLives(this.lives);
       this.isInvincible = true;
       setTimeout(() => this.isInvincible = false, 500);
     }
 
     this.render();
+  }
+
+  public destroy(): void {
+    document.body.removeEventListener('keydown', this.downKeyHandlerRef);
+    document.body.removeEventListener('keyup', this.upKeyHandlerRef);
   }
 
   private goToNextRow(): void {
