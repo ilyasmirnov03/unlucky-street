@@ -1,5 +1,5 @@
-import { Camera } from './camera';
-import { GameSettings } from './game-settings';
+import { Camera } from './core/camera';
+import { GameSettings } from './core/game-settings';
 import { Player } from './player';
 import { TiledRow } from './tiled-row';
 

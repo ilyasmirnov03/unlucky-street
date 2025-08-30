@@ -1,9 +1,8 @@
-import { Camera } from "./camera";
-import { GameSettings } from "./game-settings";
+import { GameSettings } from "./core/game-settings";
 import { Human } from "./human";
-import { ImageStorage } from "./image-storage";
+import { ImageStorage } from "./core/image-storage";
 import { Obstacle } from "./obstacle";
-import { randomNumberBetween, shouldWithChance, weightedRandom } from "./random-utils";
+import { randomNumberBetween, shouldWithChance, weightedRandom } from "./core/random-utils";
 import { Splash } from "./ui/splash";
 
 /**

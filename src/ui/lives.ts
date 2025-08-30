@@ -1,4 +1,4 @@
-import { ImageStorage } from "../image-storage";
+import { ImageStorage } from "../core/image-storage";
 
 export class LivesUi {
 

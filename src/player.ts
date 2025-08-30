@@ -1,8 +1,8 @@
-import { Camera } from "./camera";
+import { Camera } from "./core/camera";
 import { GameLoop } from "./core/game-loop";
 import { GameMap } from "./game-map";
-import { GameSettings } from "./game-settings";
-import { ImageStorage } from "./image-storage";
+import { GameSettings } from "./core/game-settings";
+import { ImageStorage } from "./core/image-storage";
 import { DeathScreen } from "./ui/death-screen";
 import { LivesUi } from "./ui/lives";
 

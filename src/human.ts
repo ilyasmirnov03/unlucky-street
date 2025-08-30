@@ -1,7 +1,7 @@
-import { Camera } from "./camera";
-import { GameSettings } from "./game-settings";
-import { ImageStorage } from "./image-storage";
-import { randomNumberBetween } from "./random-utils";
+import { Camera } from "./core/camera";
+import { GameSettings } from "./core/game-settings";
+import { ImageStorage } from "./core/image-storage";
+import { randomNumberBetween } from "./core/random-utils";
 import { TiledRow } from "./tiled-row";
 
 interface HumanInterface {

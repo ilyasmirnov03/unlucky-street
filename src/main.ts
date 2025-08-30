@@ -1,7 +1,7 @@
 import { GameLoop } from './core/game-loop';
+import { GameSettings } from './core/game-settings';
 import { GameMap } from './game-map';
-import { GameSettings } from './game-settings';
-import { ImageStorage } from './image-storage';
+import { ImageStorage } from './core/image-storage';
 import { Player } from './player';
 import './styles.css';
 import { DeathScreen } from './ui/death-screen';

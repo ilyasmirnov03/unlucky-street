@@ -1,6 +1,6 @@
 import { GameLoop } from "../core/game-loop";
 import { GameMap } from "../game-map";
-import { GameSettings } from "../game-settings";
+import { GameSettings } from "../core/game-settings";
 import { Player } from "../player";
 
 export class DeathScreen {
