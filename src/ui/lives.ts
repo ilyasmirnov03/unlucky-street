@@ -1,3 +1,5 @@
+import { ImageStorage } from "../image-storage";
+
 export class LivesUi {
 
   public static container: HTMLElement;
@@ -5,13 +7,21 @@ export class LivesUi {
   public static renderLives(lives: number): void {
     console.debug('Player lives:', lives);
     this.container.replaceChildren();
+    let image = 'happy';
+
+    if (lives <= 3) {
+      image = 'angry';
+    } else if (lives <= 6) {
+      image = 'pockerface';
+    }
+
     for (let i = 0; i < 9; i++) {
-      const el = document.createElement('div');
-      el.classList.add('life');
       if (i + 1 > lives) {
-        el.classList.add('empty');
+        image = 'empty';
       }
-      this.container.appendChild(el);
+      const img = ImageStorage.icons.get(image)?.cloneNode() as HTMLImageElement;
+      img.classList.add('life');
+      this.container.appendChild(img);
     }
   }
 }

@@ -1,9 +1,11 @@
+export type ImagesMap = Map<string, HTMLImageElement>;
+
 async function getAssetsWithMap(
   assets: string[],
   rootPath: string,
   width = 16,
   height = 16,
-): Promise<Map<string, HTMLImageElement>> {
+): Promise<ImagesMap> {
   const imagePromises: Promise<HTMLImageElement>[] = [];
   const imagesMap = new Map<string, HTMLImageElement>();
 
@@ -38,13 +40,18 @@ export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
   return Promise.all(imagePromises);
 }
 
-export async function loadPlayerAssets(): Promise<Map<string, HTMLImageElement>> {
+export async function loadPlayerAssets(): Promise<ImagesMap> {
   const catImages = ['back-cat', 'side-cat'];
   return await getAssetsWithMap(catImages, '/assets/player');
 }
 
-export async function loadHumanAssets(): Promise<Map<string, HTMLImageElement>> {
+export async function loadHumanAssets(): Promise<ImagesMap> {
   const humanImages = ['human', 'hat1', 'hat2', 'hat3', 'hat4'];
   return await getAssetsWithMap(humanImages, '/assets/human', 16, 32);
+}
+
+export async function loadIcons(): Promise<ImagesMap> {
+  const humanImages = ['angry', 'happy', 'pockerface', 'empty'];
+  return await getAssetsWithMap(humanImages, '/assets/icons', 16, 16);
 }
 

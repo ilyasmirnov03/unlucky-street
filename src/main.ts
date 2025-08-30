@@ -2,7 +2,6 @@ import { GameLoop } from './core/game-loop';
 import { GameMap } from './game-map';
 import { GameSettings } from './game-settings';
 import { ImageStorage } from './image-storage';
-import { loadHumanAssets, loadObstacleAssets, loadPlayerAssets } from './load';
 import { Player } from './player';
 import './styles.css';
 import { DeathScreen } from './ui/death-screen';
@@ -12,10 +11,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const gameLoop = new GameLoop();
   DeathScreen.init(gameLoop);
   LivesUi.container = document.getElementById('lives') as HTMLElement;
-
-  ImageStorage.obstacles = await loadObstacleAssets();
-  ImageStorage.playerImages = await loadPlayerAssets();
-  ImageStorage.humanImages = await loadHumanAssets();
+  await ImageStorage.init();
 
   const canvas = document.getElementById('game') as HTMLCanvasElement;
   canvas.width = document.body.offsetWidth;

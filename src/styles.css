@@ -27,15 +27,10 @@ canvas {
 }
 
 .life {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: black;
-}
-
-.life.empty {
-  background: transparent;
-  border: 1px solid black;
+  width: 64px;
+  height: 64px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 #death-screen {
