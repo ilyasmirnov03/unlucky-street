@@ -103,7 +103,7 @@ export class Player {
       }
       LivesUi.renderLives(this.lives);
       this.isInvincible = true;
-      setTimeout(() => this.isInvincible = false, 500);
+      setTimeout(() => this.isInvincible = false, 1000);
     }
 
     this.render();

@@ -6,11 +6,13 @@ import { Player } from './player';
 import './styles.css';
 import { DeathScreen } from './ui/death-screen';
 import { LivesUi } from './ui/lives';
+import { Score } from './ui/score';
 
 window.addEventListener('DOMContentLoaded', async () => {
   const gameLoop = new GameLoop();
   DeathScreen.init(gameLoop);
-  LivesUi.container = document.getElementById('lives') as HTMLElement;
+  Score.init();
+  LivesUi.init();
   await ImageStorage.init();
 
   const canvas = document.getElementById('game') as HTMLCanvasElement;

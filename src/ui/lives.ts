@@ -4,6 +4,10 @@ export class LivesUi {
 
   public static container: HTMLElement;
 
+  public static init(): void {
+    this.container = document.getElementById('lives') as HTMLElement;
+  }
+
   public static renderLives(lives: number): void {
     console.debug('Player lives:', lives);
     this.container.replaceChildren();

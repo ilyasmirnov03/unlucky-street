@@ -2,6 +2,7 @@ import { GameLoop } from "../core/game-loop";
 import { GameMap } from "../game-map";
 import { GameSettings } from "../core/game-settings";
 import { Player } from "../player";
+import { Score } from "./score";
 
 export class DeathScreen {
 
@@ -12,6 +13,7 @@ export class DeathScreen {
 
     // Restart button
     this.container.querySelector('button')?.addEventListener('click', () => {
+      Score.addScore(0, true);
       const gameMap = new GameMap();
       const player = new Player(gameMap, gameLoop);
       this.hide();
