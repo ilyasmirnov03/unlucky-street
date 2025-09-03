@@ -30,6 +30,10 @@ export class GameMap {
         rowHeight,
         rowHeight * i,
       );
+      if (i > 0) {
+        tiledRow.generateRandomObstacles();
+      }
+
       // Do not spawn humans on rows close to the player at the start
       if (i > 3) {
         tiledRow.generateHumans();
@@ -75,6 +79,7 @@ export class GameMap {
     Camera.y = newRowY + row.height;
 
     this.rows.push(newRow);
+    newRow.generateRandomObstacles();
     newRow.generateHumans();
     removedRow.destroy();
   }

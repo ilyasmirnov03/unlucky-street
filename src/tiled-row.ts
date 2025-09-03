@@ -31,11 +31,10 @@ export class TiledRow {
     this.height = height;
     this.width = GameSettings.canvas.width;
 
-    this.generateRandomObstacles();
     this.render();
   }
 
-  private generateRandomObstacles(): void {
+  public generateRandomObstacles(): void {
     const tilesAmount = Math.round(Math.random() * 2);
 
     for (let i = 0; i < tilesAmount; i++) {
