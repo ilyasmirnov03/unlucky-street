@@ -8,12 +8,14 @@ import { DeathScreen } from './ui/death-screen';
 import { LivesUi } from './ui/lives';
 import { Score } from './ui/score';
 import { getById } from './core/dom-utils';
+import { MobileControls } from './core/mobile-controls';
 
 window.addEventListener('DOMContentLoaded', async () => {
   const gameLoop = new GameLoop();
   DeathScreen.init(gameLoop);
   Score.init();
   LivesUi.init();
+  MobileControls.init();
   await ImageStorage.init();
 
   const canvas = getById<HTMLCanvasElement>('game');

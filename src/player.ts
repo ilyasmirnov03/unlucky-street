@@ -6,6 +6,7 @@ import { ImageStorage } from "./core/image-storage";
 import { DeathScreen } from "./ui/death-screen";
 import { LivesUi } from "./ui/lives";
 import { getById } from "./core/dom-utils";
+import { MobileControls } from "./core/mobile-controls";
 
 /**
  * Class to manage player functionnality.
@@ -32,10 +33,6 @@ export class Player {
 
   private upKeyHandlerRef: any;
 
-  private pointerDownHandlerRef: any;
-
-  private pointerUpHandlerRef: any;
-
   constructor(gameMap: GameMap, gameLoop: GameLoop) {
     this.gameMap = gameMap;
     this.gameLoop = gameLoop;
@@ -47,13 +44,10 @@ export class Player {
     }
     console.debug('Initial player coordinates:', this.x, this.y);
 
-    const mobileControls = getById('mobile').children;
-    this.pointerDownHandlerRef = this.handlePointerDown.bind(this);
-    this.pointerUpHandlerRef = this.handlePointerUp.bind(this);
-    for (const child of mobileControls) {
-      child.addEventListener('pointerdown', this.pointerDownHandlerRef);
-      child.addEventListener('pointerup', this.pointerUpHandlerRef);
-    }
+    MobileControls.addHandlers(
+      this.handlePointerDown.bind(this),
+      this.handlePointerUp.bind(this),
+    );
 
     this.downKeyHandlerRef = this.handleDownKey.bind(this);
     this.upKeyHandlerRef = this.handleUpKey.bind(this);
