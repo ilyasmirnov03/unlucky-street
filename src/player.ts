@@ -31,6 +31,10 @@ export class Player {
 
   private upKeyHandlerRef: any;
 
+  private pointerDownHandlerRef: any;
+
+  private pointerUpHandlerRef: any;
+
   constructor(gameMap: GameMap, gameLoop: GameLoop) {
     this.gameMap = gameMap;
     this.gameLoop = gameLoop;
@@ -41,6 +45,14 @@ export class Player {
       this.y = gameMap.currentRow.y; //+ gameMap.currentRow.height / 2 - 50;
     }
     console.debug('Initial player coordinates:', this.x, this.y);
+
+    const mobileControls = (document.getElementById('mobile') as HTMLElement).children;
+    this.pointerDownHandlerRef = this.handlePointerDown.bind(this);
+    this.pointerUpHandlerRef = this.handlePointerUp.bind(this);
+    for (const child of mobileControls) {
+      child.addEventListener('pointerdown', this.pointerDownHandlerRef);
+      child.addEventListener('pointerup', this.pointerUpHandlerRef);
+    }
 
     this.downKeyHandlerRef = this.handleDownKey.bind(this);
     this.upKeyHandlerRef = this.handleUpKey.bind(this);
@@ -116,6 +128,24 @@ export class Player {
 
   private goToNextRow(): void {
     this.gameMap.onNextRow(this);
+  }
+
+  private handlePointerUp(e: PointerEvent): void {
+    this.pressedKeys.delete('left');
+    this.pressedKeys.delete('right');
+  }
+
+  private handlePointerDown(e: PointerEvent): void {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    if (e.target.id === 'left') {
+      this.pressedKeys.add('left');
+    } else if (e.target.id === 'right') {
+      this.pressedKeys.add('right');
+    } else if (e.target.id === 'center') {
+      this.goToNextRow();
+    }
   }
 
   private handleDownKey(e: KeyboardEvent): void {
