@@ -18,5 +18,9 @@ export class Score {
     this.container.textContent = this.score.toString();
   }
 
+  public static getScore(): number {
+    return this.score;
+  }
+
 }
 

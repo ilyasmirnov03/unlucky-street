@@ -1,3 +1,4 @@
+import { getById } from "../core/dom-utils";
 import { ImageStorage } from "../core/image-storage";
 
 export class LivesUi {
@@ -5,7 +6,7 @@ export class LivesUi {
   public static container: HTMLElement;
 
   public static init(): void {
-    this.container = document.getElementById('lives') as HTMLElement;
+    this.container = getById('lives');
   }
 
   public static renderLives(lives: number): void {

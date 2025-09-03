@@ -5,6 +5,7 @@ import { GameSettings } from "./core/game-settings";
 import { ImageStorage } from "./core/image-storage";
 import { DeathScreen } from "./ui/death-screen";
 import { LivesUi } from "./ui/lives";
+import { getById } from "./core/dom-utils";
 
 /**
  * Class to manage player functionnality.
@@ -46,7 +47,7 @@ export class Player {
     }
     console.debug('Initial player coordinates:', this.x, this.y);
 
-    const mobileControls = (document.getElementById('mobile') as HTMLElement).children;
+    const mobileControls = getById('mobile').children;
     this.pointerDownHandlerRef = this.handlePointerDown.bind(this);
     this.pointerUpHandlerRef = this.handlePointerUp.bind(this);
     for (const child of mobileControls) {
@@ -130,7 +131,7 @@ export class Player {
     this.gameMap.onNextRow(this);
   }
 
-  private handlePointerUp(e: PointerEvent): void {
+  private handlePointerUp(): void {
     this.pressedKeys.delete('left');
     this.pressedKeys.delete('right');
   }

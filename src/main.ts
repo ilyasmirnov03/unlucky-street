@@ -7,6 +7,7 @@ import './styles.css';
 import { DeathScreen } from './ui/death-screen';
 import { LivesUi } from './ui/lives';
 import { Score } from './ui/score';
+import { getById } from './core/dom-utils';
 
 window.addEventListener('DOMContentLoaded', async () => {
   const gameLoop = new GameLoop();
@@ -15,7 +16,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   LivesUi.init();
   await ImageStorage.init();
 
-  const canvas = document.getElementById('game') as HTMLCanvasElement;
+  const canvas = getById<HTMLCanvasElement>('game');
   canvas.width = document.body.offsetWidth;
   canvas.height = document.body.offsetHeight;
 

@@ -109,15 +109,6 @@ export class TiledRow {
             : Math.round(150 * Math.exp(-(dx - 150) / 100));
 
         basePointsSum += basePoints;
-
-        // Keep your "close cross" splash for max range only
-        if (dx <= 150) {
-          console.debug('Displaying text at:', human.x, human.row?.y);
-          Splash.showForTime(
-            { text: 'Crossed road!', x: human.x, y: human.row?.y },
-            2000
-          );
-        }
       }
     }
 
@@ -133,7 +124,7 @@ export class TiledRow {
     const totalPoints = Math.round(basePointsSum * multiplier);
     if (totalPoints > 0) {
       Splash.showForTime(
-        { text: totalPoints.toString(), x, y: this.y - this.height },
+        { text: totalPoints.toString(), x, y: this.y },
         2000
       );
     }
