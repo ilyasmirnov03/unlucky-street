@@ -5,21 +5,18 @@ import { GameSettings } from "./core/game-settings";
 import { ImageStorage } from "./core/image-storage";
 import { DeathScreen } from "./ui/death-screen";
 import { LivesUi } from "./ui/lives";
-import { getById } from "./core/dom-utils";
 import { MobileControls } from "./core/mobile-controls";
+import { Sprite } from "./core/sprite";
+import { RatioedConstants } from "./core/ratioed-consts";
 
 /**
  * Class to manage player functionnality.
  */
-export class Player {
+export class Player extends Sprite {
 
   public gameMap: GameMap;
 
   private gameLoop: GameLoop;
-
-  public x = 0;
-
-  public y = 0;
 
   private pressedKeys = new Set<'left' | 'right'>();
 
@@ -34,12 +31,16 @@ export class Player {
   private upKeyHandlerRef: any;
 
   constructor(gameMap: GameMap, gameLoop: GameLoop) {
+    super();
     this.gameMap = gameMap;
     this.gameLoop = gameLoop;
 
+    this.spriteWidth = RatioedConstants.player;
+    this.spriteHeight = RatioedConstants.player;
+
     // Center player model
     if (gameMap.currentRow != null) {
-      this.x = gameMap.currentRow.width / 2 - 50;
+      this.x = gameMap.currentRow.width / 2 - (this.spriteWidth / 2);
       this.y = gameMap.currentRow.y; //+ gameMap.currentRow.height / 2 - 50;
     }
     console.debug('Initial player coordinates:', this.x, this.y);
@@ -63,19 +64,17 @@ export class Player {
   public render(): void {
     const img = ImageStorage.playerImages.get('back-cat') as HTMLImageElement;
     const sideImg = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
-    const spriteW = 96;
-    const spriteH = 96;
-    const y = Camera.worldYToScreen(this.y, 100);
+    const y = Camera.worldYToScreen(this.y, this.spriteHeight);
 
     GameSettings.context.save();
 
     if (this.pressedKeys.has('left')) {
       GameSettings.context.scale(-1, 1);
-      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, -this.x - spriteW, y, spriteW, spriteH);
+      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
     } else if (this.pressedKeys.has('right')) {
-      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, this.x, y, spriteW, spriteH);
+      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, this.x, y, this.spriteHeight, this.spriteHeight);
     } else {
-      GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, y, spriteW, spriteH);
+      GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, y, this.spriteWidth, this.spriteHeight);
     }
 
     GameSettings.context.restore();
@@ -96,7 +95,7 @@ export class Player {
 
     // Screen collisions
     if (
-      (nextX >= 0 && nextX <= GameSettings.canvas.offsetWidth - 100) &&
+      (nextX >= 0 && nextX <= GameSettings.canvas.offsetWidth - this.spriteWidth) &&
       !isIntersectingWithObstacles
     ) {
       this.x = nextX;

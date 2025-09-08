@@ -5,15 +5,15 @@ import { Obstacle } from "./obstacle";
 import { randomNumberBetween, shouldWithChance, weightedRandom } from "./core/random-utils";
 import { Splash } from "./ui/splash";
 import { Score } from "./ui/score";
+import { Sprite } from "./core/sprite";
+import { RatioedConstants } from "./core/ratioed-consts";
 
 /**
  * A row on the game map with tiles.
  * It contains randomly generated obstacles and textures.
  * Upon new tiled row generation, a few humans will spawn as well.
  */
-export class TiledRow {
-
-  public y: number;
+export class TiledRow extends Sprite {
 
   public height: number;
 
@@ -27,6 +27,7 @@ export class TiledRow {
     height: number,
     y: number,
   ) {
+    super();
     this.y = y;
     this.height = height;
     this.width = GameSettings.canvas.width;
@@ -41,7 +42,7 @@ export class TiledRow {
       const obstacleNumber = Math.round(Math.random() * (ImageStorage.obstacles.length - 1));
       const obstacleImage = ImageStorage.obstacles[obstacleNumber];
       const obstacle = new Obstacle({
-        x: randomNumberBetween(0, GameSettings.canvas.offsetWidth - 96),
+        x: randomNumberBetween(0, GameSettings.canvas.offsetWidth - RatioedConstants.obstacle),
         image: obstacleImage,
         row: this,
       });
@@ -51,7 +52,7 @@ export class TiledRow {
 
   public isIntersectingWithAnyObstacleOnX(x: number): boolean {
     for (const obstacle of this.obstacles) {
-      if (x <= obstacle.x + 96 && x >= obstacle.x - 96) {
+      if (x <= obstacle.x + RatioedConstants.obstacle && x >= obstacle.x - RatioedConstants.obstacle) {
         return true;
       }
     }
@@ -61,7 +62,7 @@ export class TiledRow {
 
   public isIntersectingWithAHuman(x: number): boolean {
     for (const human of this.humans) {
-      if (x <= human.x + 100 && x + 100 >= human.x) {
+      if (x <= human.x + RatioedConstants.player && x + RatioedConstants.player >= human.x) {
         return true;
       }
     }

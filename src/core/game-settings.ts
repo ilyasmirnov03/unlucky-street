@@ -6,4 +6,7 @@ export class GameSettings {
   public static canvas: HTMLCanvasElement;
 
   public static context: CanvasRenderingContext2D;
+
+  public static ratio = 1;
 }
+

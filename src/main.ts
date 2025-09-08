@@ -9,6 +9,7 @@ import { LivesUi } from './ui/lives';
 import { Score } from './ui/score';
 import { getById } from './core/dom-utils';
 import { MobileControls } from './core/mobile-controls';
+import { RatioedConstants } from './core/ratioed-consts';
 
 window.addEventListener('DOMContentLoaded', async () => {
   const gameLoop = new GameLoop();
@@ -27,6 +28,13 @@ window.addEventListener('DOMContentLoaded', async () => {
   context.font = '32px sans-serif';
   GameSettings.canvas = canvas;
   GameSettings.context = context;
+
+  let ratio = 1;
+  if (canvas.width < 720) {
+    ratio = canvas.width / 720;
+  }
+  GameSettings.ratio = ratio;
+  RatioedConstants.applyRatio(ratio);
 
   const gameMap = new GameMap();
   const player = new Player(gameMap, gameLoop);
