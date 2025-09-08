@@ -20,7 +20,7 @@ export class Player extends Sprite {
 
   private pressedKeys = new Set<'left' | 'right'>();
 
-  private speed = 2;
+  private speed = 250 * GameSettings.ratio;
 
   private isInvincible = false;
 
@@ -80,7 +80,7 @@ export class Player extends Sprite {
     GameSettings.context.restore();
   }
 
-  public update(): void {
+  public update(dt: number): void {
     let dx = 0;
 
     if (this.pressedKeys.has('left')) {
@@ -89,7 +89,7 @@ export class Player extends Sprite {
       dx += 1;
     }
 
-    const nextX = this.x + dx * this.speed;
+    const nextX = this.x + dx * this.speed * dt;
 
     const isIntersectingWithObstacles = this.gameMap.currentRow?.isIntersectingWithAnyObstacleOnX(nextX);
 
@@ -118,6 +118,7 @@ export class Player extends Sprite {
   public destroy(): void {
     document.body.removeEventListener('keydown', this.downKeyHandlerRef);
     document.body.removeEventListener('keyup', this.upKeyHandlerRef);
+    MobileControls.removeHandlers();
   }
 
   private goToNextRow(): void {

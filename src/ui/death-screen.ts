@@ -18,6 +18,7 @@ export class DeathScreen {
       const gameMap = new GameMap();
       const player = new Player(gameMap, gameLoop);
       this.hide();
+      gameLoop.setLastTime();
       gameLoop.start(GameSettings.context, player, gameMap);
     });
   }

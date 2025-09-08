@@ -39,6 +39,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   const gameMap = new GameMap();
   const player = new Player(gameMap, gameLoop);
 
+  gameLoop.setLastTime();
   gameLoop.start(context, player, gameMap);
 });
 

@@ -84,9 +84,9 @@ export class GameMap {
     removedRow.destroy();
   }
 
-  public update(): void {
+  public update(dt: number): void {
     for (const row of this.rows) {
-      row.render();
+      row.render(dt);
     }
   }
 

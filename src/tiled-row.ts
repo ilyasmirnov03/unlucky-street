@@ -32,7 +32,7 @@ export class TiledRow extends Sprite {
     this.height = height;
     this.width = GameSettings.canvas.width;
 
-    this.render();
+    this.render(0);
   }
 
   public generateRandomObstacles(): void {
@@ -81,8 +81,8 @@ export class TiledRow extends Sprite {
       this.humans.push(new Human({
         row: this,
         direction: shouldWithChance(0.5) ? -1 : 1,
-        speed: randomNumberBetween(1, 2),
-        x: Math.round(randomNumberBetween(-96, GameSettings.canvas.offsetWidth)),
+        speed: randomNumberBetween(200, 250),
+        x: Math.round(randomNumberBetween(-RatioedConstants.humanWidth, GameSettings.canvas.offsetWidth)),
       }));
     }
   }
@@ -131,12 +131,12 @@ export class TiledRow extends Sprite {
     Score.addScore(totalPoints);
   }
 
-  public render(): void {
+  public render(dt: number): void {
     for (const obstacle of this.obstacles) {
       obstacle.render();
     }
     for (const human of this.humans) {
-      human.render();
+      human.render(dt);
     }
   }
 

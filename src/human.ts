@@ -37,7 +37,7 @@ export class Human extends Sprite {
     super();
     this.row = humanObj.row;
     this.direction = humanObj.direction;
-    this.speed = humanObj.speed;
+    this.speed = humanObj.speed * GameSettings.ratio;
     this.x = humanObj.x;
 
     this.hat = ImageStorage.humanImages.get(`hat${Math.round(randomNumberBetween(1, 4))}`) as HTMLImageElement;
@@ -67,12 +67,12 @@ export class Human extends Sprite {
     }
   }
 
-  private update(): void {
+  private update(dt: number): void {
     if (this.isLocked) {
       return;
     }
 
-    const nextX = this.x + this.direction * this.speed;
+    const nextX = this.x + this.direction * this.speed * dt;
 
     // Screen collisions
     if (nextX >= -this.spriteWidth && nextX <= GameSettings.canvas.offsetWidth) {
@@ -80,8 +80,8 @@ export class Human extends Sprite {
     }
   }
 
-  public render(): void {
-    this.update();
+  public render(dt: number): void {
+    this.update(dt);
 
     const img = ImageStorage.humanImages.get('human') as HTMLImageElement;
     this.spriteWidth = RatioedConstants.humanWidth;
