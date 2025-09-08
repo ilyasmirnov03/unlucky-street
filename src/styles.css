@@ -83,5 +83,10 @@ canvas {
   z-index: 1;
   height: 100%;
   width: 100%;
-  grid-template-columns: 20% 1fr 20%;
+  grid-template-rows: 60% 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+#center {
+  grid-column: 1 / -1;
 }
