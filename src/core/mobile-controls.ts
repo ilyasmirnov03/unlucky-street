@@ -13,7 +13,7 @@ export class MobileControls {
   }
 
   public static addHandlers(downHandler: any, upHandler: any): void {
-    this.pointerUpHandlerRef = downHandler;
+    this.pointerDownHandlerRef = downHandler;
     this.pointerUpHandlerRef = upHandler;
 
     for (const child of this.container.children) {
@@ -29,7 +29,7 @@ export class MobileControls {
     }
 
     this.pointerUpHandlerRef = null;
-    this.pointerUpHandlerRef = null;
+    this.pointerDownHandlerRef = null;
   }
 }
 
