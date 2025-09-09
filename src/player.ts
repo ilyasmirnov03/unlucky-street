@@ -30,6 +30,13 @@ export class Player extends Sprite {
 
   private upKeyHandlerRef: any;
 
+  private invincibleAnimationInterval: number;
+
+  /**
+   * Player's alpha state, used for invincibility animation
+   */
+  private alpha = 1;
+
   constructor(gameMap: GameMap, gameLoop: GameLoop) {
     super();
     this.gameMap = gameMap;
@@ -67,6 +74,8 @@ export class Player extends Sprite {
     const y = Camera.worldYToScreen(this.y, this.spriteHeight);
 
     GameSettings.context.save();
+
+    GameSettings.context.globalAlpha = this.alpha;
 
     if (this.pressedKeys.has('left')) {
       GameSettings.context.scale(-1, 1);
@@ -109,7 +118,12 @@ export class Player extends Sprite {
       }
       LivesUi.renderLives(this.lives);
       this.isInvincible = true;
-      setTimeout(() => this.isInvincible = false, 1000);
+      this.setupInvincibleAnimation();
+      setTimeout(() => {
+        this.alpha = 1;
+        this.isInvincible = false
+        clearInterval(this.invincibleAnimationInterval);
+      }, 1000);
     }
 
     this.render();
@@ -119,6 +133,14 @@ export class Player extends Sprite {
     document.body.removeEventListener('keydown', this.downKeyHandlerRef);
     document.body.removeEventListener('keyup', this.upKeyHandlerRef);
     MobileControls.removeHandlers();
+  }
+
+  private setupInvincibleAnimation(): void {
+    let factor = -0.5;
+    this.invincibleAnimationInterval = setInterval(() => {
+      this.alpha += factor;
+      factor *= -1;
+    }, 100);
   }
 
   private goToNextRow(): void {
