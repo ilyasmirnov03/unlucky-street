@@ -1,6 +1,7 @@
 import { GameMap } from "../game-map";
 import { Player } from "../player";
 import { Splash } from "../ui/splash";
+import { GameSettings } from "./game-settings";
 
 export class GameLoop {
 
@@ -12,7 +13,7 @@ export class GameLoop {
     this.lastTime = performance.now();
   }
 
-  public start(ctx: CanvasRenderingContext2D, player: Player, gameMap: GameMap, currentTime = 0): void {
+  public start(player: Player, gameMap: GameMap, currentTime = 0): void {
     if (this.canceled) { // I wish I knew a better way...
       player.destroy();
       this.canceled = false; // auto-reset
@@ -22,12 +23,12 @@ export class GameLoop {
     const dt = (currentTime - this.lastTime) / 1000;
     this.lastTime = currentTime;
 
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    GameSettings.context.clearRect(0, 0, GameSettings.canvas.width, GameSettings.canvas.height);
     gameMap.update(dt);
     player.update(dt);
     Splash.update();
 
-    requestAnimationFrame(this.start.bind(this, ctx, player, gameMap));
+    requestAnimationFrame(this.start.bind(this, player, gameMap));
   }
 
   public stop(): void {

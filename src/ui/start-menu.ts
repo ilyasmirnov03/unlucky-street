@@ -1,33 +1,40 @@
+import { getById } from "../core/dom-utils";
 import { GameLoop } from "../core/game-loop";
 import { GameMap } from "../game-map";
 import { Player } from "../player";
-import { Score } from "./score";
-import { getById } from "../core/dom-utils";
 
-export class DeathScreen {
+export class StartMenu {
 
   private static container: HTMLElement;
 
   public static init(gameLoop: GameLoop): void {
-    this.container = getById('death-screen');
+    this.container = getById('start-menu');
 
-    // Restart button
-    this.container.querySelector('button')?.addEventListener('click', () => {
-      Score.addScore(0, true);
-      const gameMap = new GameMap();
-      const player = new Player(gameMap, gameLoop);
+    // Initial map settings with initial render
+    const gameMap = new GameMap();
+    const player = new Player(gameMap, gameLoop);
+    player.render();
+    gameMap.update(0);
+
+    // Start
+    getById('s').addEventListener('click', () => {
       this.hide();
       gameLoop.setLastTime();
       gameLoop.start(player, gameMap);
+    });
+
+    // Tutorial
+    getById('t').addEventListener('click', () => {
+
     });
   }
 
   public static show(): void {
     this.container.style.display = 'flex';
-    getById('final-score').textContent = Score.getScore().toString();
   }
 
   public static hide(): void {
     this.container.style.display = 'none';
   }
 }
+
