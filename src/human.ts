@@ -76,7 +76,7 @@ export class Human extends Sprite {
 
     // Screen collisions
     if (nextX >= -this.spriteWidth && nextX <= GameSettings.canvas.offsetWidth) {
-      this.x = nextX;
+      //this.x = nextX;
     }
   }
 

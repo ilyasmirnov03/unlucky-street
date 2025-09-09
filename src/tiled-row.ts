@@ -7,6 +7,7 @@ import { Splash } from "./ui/splash";
 import { Score } from "./ui/score";
 import { Sprite } from "./core/sprite";
 import { RatioedConstants } from "./core/ratioed-consts";
+import { isIntersectingOnX } from "./core/intersection-utils";
 
 /**
  * A row on the game map with tiles.
@@ -52,7 +53,7 @@ export class TiledRow extends Sprite {
 
   public isIntersectingWithAnyObstacleOnX(x: number): boolean {
     for (const obstacle of this.obstacles) {
-      if (x <= obstacle.x + RatioedConstants.obstacle && x >= obstacle.x - RatioedConstants.obstacle) {
+      if (isIntersectingOnX(x + RatioedConstants.player, x, obstacle.x + RatioedConstants.obstacle, obstacle.x)) {
         return true;
       }
     }
@@ -60,9 +61,14 @@ export class TiledRow extends Sprite {
     return false;
   }
 
+  /**
+   * Is intersecting with a human based on provided x
+   */
   public isIntersectingWithAHuman(x: number): boolean {
     for (const human of this.humans) {
-      if (x <= human.x + RatioedConstants.player && x + RatioedConstants.player >= human.x) {
+      const maxPx = x + RatioedConstants.player;
+      const maxHx = human.x + RatioedConstants.humanWidth;
+      if (isIntersectingOnX(maxPx, x, maxHx, human.x)) {
         return true;
       }
     }
