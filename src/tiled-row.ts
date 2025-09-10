@@ -31,7 +31,7 @@ export class TiledRow extends Sprite {
     super();
     this.y = y;
     this.height = height;
-    this.width = GameSettings.canvas.width;
+    this.width = GameSettings.c.width;
 
     this.render(0);
   }
@@ -43,7 +43,7 @@ export class TiledRow extends Sprite {
       const obstacleNumber = Math.round(Math.random() * (ImageStorage.obstacles.length - 1));
       const obstacleImage = ImageStorage.obstacles[obstacleNumber];
       const obstacle = new Obstacle({
-        x: randomNumberBetween(0, GameSettings.canvas.offsetWidth - RatioedConstants.obstacle),
+        x: randomNumberBetween(0, GameSettings.c.offsetWidth - RatioedConstants.obstacle),
         image: obstacleImage,
         row: this,
       });
@@ -88,7 +88,7 @@ export class TiledRow extends Sprite {
         row: this,
         direction: shouldWithChance(0.5) ? -1 : 1,
         speed: randomNumberBetween(200, 250),
-        x: Math.round(randomNumberBetween(-RatioedConstants.humanWidth, GameSettings.canvas.offsetWidth)),
+        x: Math.round(randomNumberBetween(-RatioedConstants.humanWidth, GameSettings.c.offsetWidth)),
       }));
     }
   }

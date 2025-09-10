@@ -1,11 +1,11 @@
 export class Score {
 
-  private static container: HTMLElement;
+  private static c: HTMLElement;
 
   private static score = 0;
 
   public static init(): void {
-    this.container = document.getElementById('score') as HTMLElement;
+    this.c = document.getElementById('score') as HTMLElement;
     this.addScore(0);
   }
 
@@ -15,7 +15,7 @@ export class Score {
     } else {
       this.score += score;
     }
-    this.container.textContent = this.score.toString();
+    this.c.textContent = this.score.toString();
   }
 
   public static getScore(): number {

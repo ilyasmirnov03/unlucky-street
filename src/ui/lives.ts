@@ -3,15 +3,15 @@ import { ImageStorage } from "../core/image-storage";
 
 export class LivesUi {
 
-  public static container: HTMLElement;
+  private static c: HTMLElement;
 
   public static init(): void {
-    this.container = getById('lives');
+    this.c = getById('lives');
   }
 
   public static renderLives(lives: number): void {
     console.debug('Player lives:', lives);
-    this.container.replaceChildren();
+    this.c.replaceChildren();
     let image = 'happy';
 
     if (lives <= 3) {
@@ -26,7 +26,7 @@ export class LivesUi {
       }
       const img = ImageStorage.icons.get(image)?.cloneNode() as HTMLImageElement;
       img.classList.add('life');
-      this.container.appendChild(img);
+      this.c.appendChild(img);
     }
   }
 }

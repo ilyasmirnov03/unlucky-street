@@ -26,8 +26,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   const context = canvas.getContext('2d') as CanvasRenderingContext2D;
   context.imageSmoothingEnabled = false;
   context.font = '32px sans-serif';
-  GameSettings.canvas = canvas;
-  GameSettings.context = context;
+  GameSettings.c = canvas;
+  GameSettings.ctx = context;
 
   let ratio = 1;
   if (canvas.width < 720) {

@@ -28,7 +28,7 @@ export class Obstacle extends Sprite {
   }
 
   public render(): void {
-    GameSettings.context.drawImage(
+    GameSettings.ctx.drawImage(
       this.image,
       0, 0, 16, 16,
       this.x, Camera.worldYToScreen(this.row.y - this.spriteHeight / 2, this.row.height), this.spriteWidth, this.spriteHeight

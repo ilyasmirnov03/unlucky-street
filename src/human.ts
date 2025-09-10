@@ -75,7 +75,7 @@ export class Human extends Sprite {
     const nextX = this.x + this.direction * this.speed * dt;
 
     // Screen collisions
-    if (nextX >= -this.spriteWidth && nextX <= GameSettings.canvas.offsetWidth) {
+    if (nextX >= -this.spriteWidth && nextX <= GameSettings.c.offsetWidth) {
       this.x = nextX;
     }
   }
@@ -88,18 +88,18 @@ export class Human extends Sprite {
     this.spriteHeight = RatioedConstants.humanHeight;
     const y = Camera.worldYToScreen(this.row.y, this.row.height) - 20;
 
-    GameSettings.context.save();
+    GameSettings.ctx.save();
 
     if (this.direction === -1) {
-      GameSettings.context.scale(-1, 1);
-      GameSettings.context.drawImage(img, 0, 0, 16, 32, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
-      GameSettings.context.drawImage(this.hat, 0, 0, 16, 32, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
+      GameSettings.ctx.scale(-1, 1);
+      GameSettings.ctx.drawImage(img, 0, 0, 16, 32, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
+      GameSettings.ctx.drawImage(this.hat, 0, 0, 16, 32, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
     } else {
-      GameSettings.context.drawImage(img, 0, 0, 16, 32, this.x, y, this.spriteWidth, this.spriteHeight);
-      GameSettings.context.drawImage(this.hat, 0, 0, 16, 32, this.x, y, this.spriteWidth, this.spriteHeight);
+      GameSettings.ctx.drawImage(img, 0, 0, 16, 32, this.x, y, this.spriteWidth, this.spriteHeight);
+      GameSettings.ctx.drawImage(this.hat, 0, 0, 16, 32, this.x, y, this.spriteWidth, this.spriteHeight);
     }
 
-    GameSettings.context.restore();
+    GameSettings.ctx.restore();
   }
 
   public onDestroy(): void {

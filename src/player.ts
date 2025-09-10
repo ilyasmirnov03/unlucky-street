@@ -73,20 +73,20 @@ export class Player extends Sprite {
     const sideImg = ImageStorage.playerImages.get('side-cat') as HTMLImageElement;
     const y = Camera.worldYToScreen(this.y, this.spriteHeight);
 
-    GameSettings.context.save();
+    GameSettings.ctx.save();
 
-    GameSettings.context.globalAlpha = this.alpha;
+    GameSettings.ctx.globalAlpha = this.alpha;
 
     if (this.pressedKeys.has('left')) {
-      GameSettings.context.scale(-1, 1);
-      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
+      GameSettings.ctx.scale(-1, 1);
+      GameSettings.ctx.drawImage(sideImg, 0, 0, 16, 16, -this.x - this.spriteWidth, y, this.spriteWidth, this.spriteHeight);
     } else if (this.pressedKeys.has('right')) {
-      GameSettings.context.drawImage(sideImg, 0, 0, 16, 16, this.x, y, this.spriteHeight, this.spriteHeight);
+      GameSettings.ctx.drawImage(sideImg, 0, 0, 16, 16, this.x, y, this.spriteHeight, this.spriteHeight);
     } else {
-      GameSettings.context.drawImage(img, 0, 0, 16, 16, this.x, y, this.spriteWidth, this.spriteHeight);
+      GameSettings.ctx.drawImage(img, 0, 0, 16, 16, this.x, y, this.spriteWidth, this.spriteHeight);
     }
 
-    GameSettings.context.restore();
+    GameSettings.ctx.restore();
   }
 
   public update(dt: number): void {
@@ -104,7 +104,7 @@ export class Player extends Sprite {
 
     // Screen collisions
     if (
-      (nextX >= 0 && nextX <= GameSettings.canvas.offsetWidth - this.spriteWidth) &&
+      (nextX >= 0 && nextX <= GameSettings.c.offsetWidth - this.spriteWidth) &&
       !isIntersectingWithObstacles
     ) {
       this.x = nextX;

@@ -3,9 +3,12 @@
  */
 export class GameSettings {
 
-  public static canvas: HTMLCanvasElement;
+  /**
+   * Canvas reference
+   */
+  public static c: HTMLCanvasElement;
 
-  public static context: CanvasRenderingContext2D;
+  public static ctx: CanvasRenderingContext2D;
 
   public static ratio = 1;
 }

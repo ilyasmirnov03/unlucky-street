@@ -24,7 +24,7 @@ export class GameMap {
     this.rows = [];
 
     const rowsAmount = 8;
-    const rowHeight = GameSettings.canvas.height / rowsAmount;
+    const rowHeight = GameSettings.c.height / rowsAmount;
     for (let i = 0; i < rowsAmount; i++) {
       const tiledRow = new TiledRow(
         rowHeight,
@@ -41,7 +41,7 @@ export class GameMap {
       this.rows.push(tiledRow);
     }
     this.currentRow = this.rows[0];
-    Camera.y = GameSettings.canvas.height;
+    Camera.y = GameSettings.c.height;
 
     console.debug('Map generated with rows:', this.rows);
   }

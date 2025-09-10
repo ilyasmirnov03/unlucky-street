@@ -23,7 +23,7 @@ export class GameLoop {
     const dt = (currentTime - this.lastTime) / 1000;
     this.lastTime = currentTime;
 
-    GameSettings.context.clearRect(0, 0, GameSettings.canvas.width, GameSettings.canvas.height);
+    GameSettings.ctx.clearRect(0, 0, GameSettings.c.width, GameSettings.c.height);
     gameMap.update(dt);
     player.update(dt);
     Splash.update();
