@@ -2,6 +2,7 @@ import { getById } from "../core/dom-utils";
 import { GameLoop } from "../core/game-loop";
 import { GameMap } from "../game-map";
 import { Player } from "../player";
+import { Tutorial } from "./tutorial";
 
 export class StartMenu {
 
@@ -15,6 +16,7 @@ export class StartMenu {
     const player = new Player(gameMap, gameLoop);
     player.render();
     gameMap.update(0);
+    const tutorialStarter = new Tutorial().init(gameMap, player, gameLoop);
 
     // Start
     getById('s').addEventListener('click', () => {
@@ -24,8 +26,9 @@ export class StartMenu {
     });
 
     // Tutorial
-    getById('t').addEventListener('click', () => {
-
+    getById('t-b').addEventListener('click', () => {
+      tutorialStarter.start();
+      this.hide();
     });
   }
 
