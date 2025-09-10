@@ -14,10 +14,16 @@ body {
   max-width: 720px;
   height: 100%;
   font-family: sans-serif;
+  overflow: hidden;
 }
 
 canvas {
   background: #3c2c6b;
+}
+
+img {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 #ui {
@@ -25,19 +31,16 @@ canvas {
   user-select: none;
 }
 
+/* LIFE UI */
+
 #lives {
   padding: 6px;
   display: flex;
 }
 
 .life {
-  width: calc(36px + 2vw);
-  height: calc(36px + 2vw);
-}
-
-img {
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  width: 64px;
+  height: auto;
 }
 
 #death-screen {
@@ -60,12 +63,19 @@ img {
   padding: 0 10px;
 }
 
+/* START MENU */
+
 .menu-buttons {
   margin-top: 32px;
 }
 
 .menu-buttons button {
-  width: 50%;
+  width: 140px;
+}
+
+header>img {
+  width: calc(32px + 1vw);
+  height: calc(32px + 1vw);
 }
 
 /* UTILITY */
