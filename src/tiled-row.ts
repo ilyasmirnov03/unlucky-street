@@ -94,25 +94,31 @@ export class TiledRow extends Sprite {
   }
 
   public checkForCrossedRoads(x: number): void {
-    let crossedRoadsAmount = 0;   // how many humans are within scoring range (≤ 450px)
-    let basePointsSum = 0;        // sum of per-human points before multiplier
+    let crossedRoadsAmount = 0;
+    let basePointsSum = 0;
+
+    console.debug('Check road cross for:', this.humans.length);
 
     for (const human of this.humans) {
       console.debug('Human x coordinates at the time of crossing:', human.x);
 
-      const dx = Math.abs(x - human.x);
+      const dx = x - human.x;
+      if (dx * human.direction < 0) {
+        console.debug('Not counting this human');
+        continue;
+      }
+
+      const dxabs = Math.abs(dx);
 
       // Only award points if within 450px
-      if (dx <= 450) {
+      if (dxabs <= 450 * GameSettings.ratio) {
         crossedRoadsAmount++;
 
-        // Distance-based base score:
-        //  - ≤150px => full 150 pts
-        //  - 150..450px => linearly fall off to 0
+        const biggestScoreDistance = 100 * GameSettings.ratio;
         const basePoints =
-          dx <= 150
+          dxabs <= biggestScoreDistance
             ? 150
-            : Math.round(150 * Math.exp(-(dx - 150) / 100));
+            : Math.round(150 * Math.exp(-(dxabs - biggestScoreDistance) / 100));
 
         basePointsSum += basePoints;
       }

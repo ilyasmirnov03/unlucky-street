@@ -21,7 +21,7 @@ export class Human extends Sprite {
   /**
    * Movement direction where -1 is left and 1 is right
    */
-  private direction: -1 | 1;
+  public direction: -1 | 1;
 
   public row: TiledRow;
 
