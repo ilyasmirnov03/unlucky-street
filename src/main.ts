@@ -14,10 +14,14 @@ window.addEventListener('DOMContentLoaded', async () => {
   const gameLoop = new GameLoop();
   DeathScreen.init(gameLoop);
 
+  const loadingContainer = getById('l');
+
   Score.init();
   LivesUi.init();
   MobileControls.init();
   await ImageStorage.init();
+
+  loadingContainer.remove();
 
   const canvas = getById<HTMLCanvasElement>('game');
   canvas.width = document.body.offsetWidth;
