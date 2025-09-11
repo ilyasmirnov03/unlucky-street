@@ -30,7 +30,7 @@ export class Tutorial {
       center: true,
     },
     {
-      text: 'Move with WASD/Arrows, or by clicking screen edges. (Note: Movement is disabled in tutorial mode)',
+      text: 'Move with WASD/Arrows on PC. On mobile, move by tapping the left/right button or any place on screen to move upwards. (Note: Movement is disabled in tutorial mode)',
       left: '50%',
       top: '50%',
       center: true,
