@@ -160,7 +160,7 @@ export class Player extends Sprite {
       this.pressedKeys.add('left');
     } else if (e.target.id === 'right') {
       this.pressedKeys.add('right');
-    } else if (e.target.id === 'center') {
+    } else {
       this.goToNextRow();
     }
   }

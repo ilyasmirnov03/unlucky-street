@@ -134,6 +134,7 @@ button {
   margin: 0.618rem;
   overflow: hidden;
   cursor: pointer;
+  user-select: none;
 }
 
 button:active,
@@ -161,16 +162,33 @@ h2 {
   padding-left: 16px;
 }
 
+/* MOBILE CONTROLS */
+
 #mobile {
-  display: grid;
   position: absolute;
   z-index: 1;
-  grid-template-rows: 80% 1fr;
-  grid-template-columns: 1fr 1fr;
 }
 
-#center {
-  grid-column: 1 / -1;
+#mobile>div {
+  position: relaitve;
+}
+
+#left,
+#right {
+  position: absolute;
+  top: 80%;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  font-size: 32px;
+}
+
+#left {
+  left: 10%;
+}
+
+#right {
+  right: 10%;
 }
 
 /* TUTORIAL */
