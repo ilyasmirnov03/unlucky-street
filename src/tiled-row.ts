@@ -43,7 +43,7 @@ export class TiledRow extends Sprite {
   }
 
   public isIntersectingWithCandy(x: number): boolean {
-    if (this.candy != null && isIntersectingOnX(x + RatioedConstants.candy, x, this.candy.x + RatioedConstants.candy, this.candy.x)) {
+    if (this.candy != null && isIntersectingOnX(x + RatioedConstants.player, x, this.candy.x + RatioedConstants.candy, this.candy.x)) {
       console.debug('[CANDY] Is intersecting with candy RIGHT NOW');
       return true;
     }
@@ -133,7 +133,7 @@ export class TiledRow extends Sprite {
           dxabs <= biggestScoreDistance
             ? 150
             : Math.round(150 * Math.exp(-(dxabs - biggestScoreDistance) / 100));
-        if (basePoints > 100 && shouldWithChance(0.3)) {
+        if (basePoints > 100 && shouldWithChance(0.4)) {
           candyX = human.x;
         }
 
