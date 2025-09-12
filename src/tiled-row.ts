@@ -7,6 +7,7 @@ import { Score } from "./ui/score";
 import { Sprite } from "./core/sprite";
 import { RatioedConstants } from "./core/ratioed-consts";
 import { isIntersectingOnX } from "./core/intersection-utils";
+import { Candy } from "./candy";
 
 /**
  * A row on the game map with tiles.
@@ -23,6 +24,8 @@ export class TiledRow extends Sprite {
 
   private humans: Human[] = [];
 
+  private candy: Candy | null = null;
+
   public constructor(
     height: number,
     y: number,
@@ -37,6 +40,14 @@ export class TiledRow extends Sprite {
 
   public addObstacle(obstacle: Obstacle): void {
     this.obstacles.push(obstacle);
+  }
+
+  public isIntersectingWithCandy(x: number): boolean {
+    if (this.candy != null && isIntersectingOnX(x + RatioedConstants.candy, x, this.candy.x + RatioedConstants.candy, this.candy.x)) {
+      console.debug('[CANDY] Is intersecting with candy RIGHT NOW');
+      return true;
+    }
+    return false;
   }
 
   public isIntersectingWithAnyObstacleOnX(x: number): boolean {
@@ -81,11 +92,26 @@ export class TiledRow extends Sprite {
     }
   }
 
-  public checkForCrossedRoads(x: number): void {
+  public removeCandy() {
+    this.candy = null;
+  }
+
+  public addCandy(x: number): void {
+    this.candy = new Candy(x, this);
+  }
+
+  /**
+   * Check for crossed roads on this row based on provided x.
+   * @returns Number that indicates the x value where candy should be dropped.
+   * This is horrible but saves space :D
+   */
+  public checkForCrossedRoads(x: number): number {
     let crossedRoadsAmount = 0;
     let basePointsSum = 0;
 
     console.debug('Check road cross for:', this.humans.length);
+
+    let candyX = -1;
 
     for (const human of this.humans) {
       console.debug('Human x coordinates at the time of crossing:', human.x);
@@ -107,6 +133,9 @@ export class TiledRow extends Sprite {
           dxabs <= biggestScoreDistance
             ? 150
             : Math.round(150 * Math.exp(-(dxabs - biggestScoreDistance) / 100));
+        if (basePoints > 100 && shouldWithChance(0.3)) {
+          candyX = human.x;
+        }
 
         basePointsSum += basePoints;
       }
@@ -129,12 +158,14 @@ export class TiledRow extends Sprite {
       );
     }
     Score.addScore(totalPoints);
+    return candyX;
   }
 
   public render(dt: number): void {
     for (const obstacle of this.obstacles) {
       obstacle.render();
     }
+    this.candy?.render();
     for (const human of this.humans) {
       human.render(dt);
     }

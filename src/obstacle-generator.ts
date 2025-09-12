@@ -37,7 +37,7 @@ export class ObstacleGenerator {
       }
 
       const x = i * RatioedConstants.obstacle;
-      const obstacleImage = ImageStorage.obstacles[Math.floor(Math.random() * ImageStorage.obstacles.length)];
+      const obstacleImage = ImageStorage.obstacles[0];
       row.addObstacle(new Obstacle({ x, image: obstacleImage, row }));
     }
 

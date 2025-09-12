@@ -11,6 +11,8 @@ export class RatioedConstants {
 
   public static humanHeight = 160;
 
+  public static candy = 32;
+
   public static applyRatio(ratio: number) {
     for (const key of Object.keys(this)) {
       this[key] *= ratio;

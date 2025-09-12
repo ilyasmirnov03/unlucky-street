@@ -1,4 +1,4 @@
-import { ImagesMap, loadHumanAssets, loadIcons, loadObstacleAssets, loadPlayerAssets } from "./load";
+import { ImagesMap, loadCandy, loadHumanAssets, loadIcons, loadObstacleAssets, loadPlayerAssets } from "./load";
 
 export class ImageStorage {
 
@@ -10,10 +10,13 @@ export class ImageStorage {
 
   public static icons: ImagesMap;
 
+  public static candy: ImagesMap;
+
   public static async init(): Promise<void> {
     ImageStorage.obstacles = await loadObstacleAssets();
     ImageStorage.playerImages = await loadPlayerAssets();
     ImageStorage.humanImages = await loadHumanAssets();
     ImageStorage.icons = await loadIcons();
+    ImageStorage.candy = await loadCandy();
   }
 }

@@ -27,7 +27,7 @@ export async function loadObstacleAssets(): Promise<HTMLImageElement[]> {
   const imagePromises: Promise<HTMLImageElement>[] = [];
 
   // Obstacles
-  const obstacles = ['1', '2'];
+  const obstacles = ['1'];
   for (const obs of obstacles) {
     const image = new Image(16, 16);
     image.src = `/assets/obstacles/${obs}.png`;
@@ -55,3 +55,7 @@ export async function loadIcons(): Promise<ImagesMap> {
   return await getAssetsWithMap(humanImages, '/assets/icons', 16, 16);
 }
 
+export async function loadCandy(): Promise<ImagesMap> {
+  const candyImages = ['fish'];
+  return await getAssetsWithMap(candyImages, '/assets/candy', 8, 5);
+}

@@ -99,6 +99,12 @@ export class Player extends Sprite {
     }
 
     const nextX = this.x + dx * this.speed * dt;
+    if (this.gameMap.currentRow?.isIntersectingWithCandy(nextX)) {
+      console.debug('[CANDY] Player has eaten a candy');
+      this.gameMap.currentRow.removeCandy();
+      this.lives++;
+      LivesUi.renderLives(this.lives);
+    }
 
     const isIntersectingWithObstacles = this.gameMap.currentRow?.isIntersectingWithAnyObstacleOnX(nextX);
 

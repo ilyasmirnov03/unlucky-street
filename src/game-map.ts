@@ -54,10 +54,10 @@ export class GameMap {
    */
   public onNextRow(player: Player): void {
     const row = this.rows[this.nextRowIndex];
-    console.debug('Going to next row:', row);
+    console.debug('[ROW] Going to next row:', row);
 
     const isIntersecting = row.isIntersectingWithAnyObstacleOnX(player.x);
-    console.debug('Is player intersecting with obstacles on next row?', isIntersecting);
+    console.debug('[ROW] Is player intersecting with obstacles on next row?', isIntersecting);
     if (isIntersecting) {
       return;
     }
@@ -72,7 +72,10 @@ export class GameMap {
 
     const previousRow = this.rows[this.nextRowIndex - 1];
     if (previousRow != null) {
-      previousRow.checkForCrossedRoads(player.x);
+      const candyX = previousRow.checkForCrossedRoads(player.x);
+      if (candyX !== -1) {
+        this.spawnCandyOnNextRow(candyX);
+      }
     }
     const removedRow = this.rows.shift() as TiledRow;
 
@@ -91,6 +94,11 @@ export class GameMap {
     for (const row of this.rows) {
       row.render(dt);
     }
+  }
+
+  private spawnCandyOnNextRow(candyX: number): void {
+    console.debug(`[CANDY] Spawning candy on ${candyX}`);
+    this.rows[this.nextRowIndex].addCandy(candyX);
   }
 
 }
