@@ -7,6 +7,13 @@ const output = path.resolve("./dist.zip");
 
 const LIMIT = 13 * 1024; // 13 KB in bytes
 
+let deleteZip = true;
+const args = process.argv.slice(2);
+if (args.includes('save-zip')) {
+  deleteZip = false;
+  console.log('Using save-zip option, will not delete final zip.');
+}
+
 try {
   // Create the zip archive (overwrite if exists)
   execSync(`zip -r -q ${output} ${folder}`, { stdio: "inherit" });
@@ -31,7 +38,7 @@ try {
   process.exitCode = 1; // mark script as failed
 } finally {
   // Always remove the zip file
-  if (fs.existsSync(output)) {
+  if (deleteZip && fs.existsSync(output)) {
     fs.unlinkSync(output);
     console.log(`🗑️ Deleted temporary archive: ${output}`);
   }
