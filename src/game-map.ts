@@ -1,5 +1,6 @@
 import { Camera } from './core/camera';
 import { GameSettings } from './core/game-settings';
+import { ObstacleGenerator } from './obstacle-generator';
 import { Player } from './player';
 import { TiledRow } from './tiled-row';
 
@@ -20,6 +21,8 @@ export class GameMap {
    */
   private nextRowIndex = 1;
 
+  private obstacleGenerator = new ObstacleGenerator();
+
   public constructor() {
     this.rows = [];
 
@@ -31,7 +34,7 @@ export class GameMap {
         rowHeight * i,
       );
       if (i > 0) {
-        tiledRow.generateRandomObstacles();
+        this.obstacleGenerator.generateObstacles(tiledRow);
       }
 
       // Do not spawn humans on rows close to the player at the start
@@ -79,7 +82,7 @@ export class GameMap {
     Camera.y = newRowY + row.height;
 
     this.rows.push(newRow);
-    newRow.generateRandomObstacles();
+    this.obstacleGenerator.generateObstacles(newRow);
     newRow.generateHumans();
     removedRow.destroy();
   }

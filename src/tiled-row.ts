@@ -1,6 +1,5 @@
 import { GameSettings } from "./core/game-settings";
 import { Human } from "./human";
-import { ImageStorage } from "./core/image-storage";
 import { Obstacle } from "./obstacle";
 import { randomNumberBetween, shouldWithChance, weightedRandom } from "./core/random-utils";
 import { Splash } from "./ui/splash";
@@ -36,19 +35,8 @@ export class TiledRow extends Sprite {
     this.render(0);
   }
 
-  public generateRandomObstacles(): void {
-    const tilesAmount = Math.round(Math.random() * 2);
-
-    for (let i = 0; i < tilesAmount; i++) {
-      const obstacleNumber = Math.round(Math.random() * (ImageStorage.obstacles.length - 1));
-      const obstacleImage = ImageStorage.obstacles[obstacleNumber];
-      const obstacle = new Obstacle({
-        x: randomNumberBetween(0, GameSettings.c.offsetWidth - RatioedConstants.obstacle),
-        image: obstacleImage,
-        row: this,
-      });
-      this.obstacles.push(obstacle);
-    }
+  public addObstacle(obstacle: Obstacle): void {
+    this.obstacles.push(obstacle);
   }
 
   public isIntersectingWithAnyObstacleOnX(x: number): boolean {
