@@ -5,7 +5,7 @@ export class RatioedConstants {
 
   public static player = 96;
 
-  public static obstacle = 120;
+  public static obstacle = 100;
 
   public static humanWidth = 80;
 

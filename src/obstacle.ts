@@ -1,5 +1,6 @@
 import { Camera } from './core/camera';
 import { GameSettings } from './core/game-settings';
+import { RatioedConstants } from './core/ratioed-consts';
 import { Sprite } from './core/sprite';
 import { TiledRow } from './tiled-row';
 
@@ -23,8 +24,8 @@ export class Obstacle extends Sprite {
     this.x = obstacleObj.x;
     this.image = obstacleObj.image;
     this.row = obstacleObj.row;
-    this.spriteWidth = 96 * GameSettings.ratio;
-    this.spriteHeight = 96 * GameSettings.ratio;
+    this.spriteWidth = RatioedConstants.obstacle;
+    this.spriteHeight = RatioedConstants.obstacle;
   }
 
   public render(): void {
