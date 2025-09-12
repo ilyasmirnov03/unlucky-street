@@ -72,9 +72,9 @@ export class GameMap {
 
     const previousRow = this.rows[this.nextRowIndex - 1];
     if (previousRow != null) {
-      const candyX = previousRow.checkForCrossedRoads(player.x);
+      const [candyX, candyY] = previousRow.checkForCrossedRoads(player.x);
       if (candyX !== -1) {
-        this.spawnCandyOnNextRow(candyX);
+        this.spawnCandyOnNextRow(candyX, candyY);
       }
     }
     const removedRow = this.rows.shift() as TiledRow;
@@ -96,9 +96,8 @@ export class GameMap {
     }
   }
 
-  private spawnCandyOnNextRow(candyX: number): void {
-    console.debug(`[CANDY] Spawning candy on ${candyX}`);
-    this.rows[this.nextRowIndex].addCandy(candyX);
+  private spawnCandyOnNextRow(candyX: number, candyY: number): void {
+    this.rows[this.nextRowIndex].addCandy(candyX, candyY);
   }
 
 }
