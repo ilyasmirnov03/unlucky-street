@@ -16,13 +16,13 @@ export class MobileControls {
     this.pointerDownHandlerRef = downHandler;
     this.pointerUpHandlerRef = upHandler;
 
-    this.container.addEventListener('pointerdown', downHandler);
-    this.container.addEventListener('pointerup', upHandler);
+    this.container.addEventListener('touchstart', downHandler);
+    this.container.addEventListener('touchend', upHandler);
   }
 
   public static removeHandlers(): void {
-    this.container.removeEventListener('pointerdown', this.pointerDownHandlerRef);
-    this.container.removeEventListener('pointerup', this.pointerUpHandlerRef);
+    this.container.removeEventListener('touchstart', this.pointerDownHandlerRef);
+    this.container.removeEventListener('touchend', this.pointerUpHandlerRef);
 
     this.pointerUpHandlerRef = null;
     this.pointerDownHandlerRef = null;

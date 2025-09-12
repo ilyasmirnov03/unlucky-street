@@ -153,12 +153,18 @@ export class Player extends Sprite {
     this.gameMap.onNextRow(this);
   }
 
-  private handlePointerUp(): void {
-    this.pressedKeys.delete('left');
-    this.pressedKeys.delete('right');
+  private handlePointerUp(e: TouchEvent): void {
+    e.preventDefault();
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+
+    if (e.target.id === 'left' || e.target.id === 'right') {
+      this.pressedKeys.delete(e.target.id);
+    }
   }
 
-  private handlePointerDown(e: PointerEvent): void {
+  private handlePointerDown(e: TouchEvent): void {
     e.preventDefault();
     if (!(e.target instanceof HTMLElement)) {
       return;
