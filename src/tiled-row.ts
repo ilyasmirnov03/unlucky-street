@@ -76,9 +76,9 @@ export class TiledRow extends Sprite {
 
   public generateHumans(): void {
     const weights = {
-      1: 0.5,
+      1: 0.6,
       2: 0.3,
-      3: 0.2,
+      3: 0.1,
     }
     const humansAmount = weightedRandom(weights);
 
@@ -86,7 +86,7 @@ export class TiledRow extends Sprite {
       this.humans.push(new Human({
         row: this,
         direction: shouldWithChance(0.5) ? -1 : 1,
-        speed: randomNumberBetween(200, 250),
+        speed: randomNumberBetween(200, 240),
         x: Math.round(randomNumberBetween(-RatioedConstants.humanWidth, GameSettings.c.offsetWidth)),
       }));
     }
@@ -96,8 +96,8 @@ export class TiledRow extends Sprite {
     this.candy = null;
   }
 
-  public addCandy(x: number): void {
-    this.candy = new Candy(x, this);
+  public addCandy(x: number, y: number): void {
+    this.candy = new Candy(x, y, this);
   }
 
   /**
@@ -105,13 +105,14 @@ export class TiledRow extends Sprite {
    * @returns Number that indicates the x value where candy should be dropped.
    * This is horrible but saves space :D
    */
-  public checkForCrossedRoads(x: number): number {
+  public checkForCrossedRoads(x: number): [number, number] {
     let crossedRoadsAmount = 0;
     let basePointsSum = 0;
 
     console.debug('Check road cross for:', this.humans.length);
 
     let candyX = -1;
+    let candyY = 0;
 
     for (const human of this.humans) {
       console.debug('Human x coordinates at the time of crossing:', human.x);
@@ -133,8 +134,9 @@ export class TiledRow extends Sprite {
           dxabs <= biggestScoreDistance
             ? 150
             : Math.round(150 * Math.exp(-(dxabs - biggestScoreDistance) / 100));
-        if (basePoints > 100 && shouldWithChance(0.4)) {
+        if (basePoints >= 100 && shouldWithChance(0.4)) {
           candyX = human.x;
+          candyY = human.row.y + human.row.height + human.spriteHeight;
         }
 
         basePointsSum += basePoints;
@@ -158,14 +160,14 @@ export class TiledRow extends Sprite {
       );
     }
     Score.addScore(totalPoints);
-    return candyX;
+    return [candyX, candyY];
   }
 
   public render(dt: number): void {
     for (const obstacle of this.obstacles) {
       obstacle.render();
     }
-    this.candy?.render();
+    this.candy?.render(dt);
     for (const human of this.humans) {
       human.render(dt);
     }
