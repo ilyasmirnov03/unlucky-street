@@ -19,6 +19,7 @@ body {
 
 canvas {
   background: #3c2c6b;
+  user-select: none;
 }
 
 img {
@@ -138,24 +139,20 @@ button {
   background-size: 110% 120%;
   background-position: center center;
 
-  position: relative;
-  display: inline-block;
   padding: .718rem 1.618rem;
   color: #fff;
   letter-spacing: 1px;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8), 0 -1px 2px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(0, 0, 0, .35);
+  border-radius: 10px;
 
   transition: all 150ms linear 0s;
 
   text-transform: uppercase;
   font-weight: 600;
   text-align: center;
-  text-decoration: none;
   margin: 0.618rem;
-  overflow: hidden;
   cursor: pointer;
-  user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -189,10 +186,6 @@ h2 {
 #mobile {
   position: absolute;
   z-index: 1;
-}
-
-#mobile>div {
-  position: relaitve;
 }
 
 #left,

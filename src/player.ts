@@ -159,6 +159,7 @@ export class Player extends Sprite {
   }
 
   private handlePointerDown(e: PointerEvent): void {
+    e.preventDefault();
     if (!(e.target instanceof HTMLElement)) {
       return;
     }
