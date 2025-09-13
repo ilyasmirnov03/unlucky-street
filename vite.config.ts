@@ -3,6 +3,7 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import { ViteMinifyPlugin } from 'vite-plugin-minify';
 
 export default defineConfig({
+  base: './',
   plugins: [
     ViteImageOptimizer({}),
     ViteMinifyPlugin({}),
