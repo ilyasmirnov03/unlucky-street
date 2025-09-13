@@ -85,8 +85,8 @@ export class TiledRow extends Sprite {
     for (let i = 0; i < humansAmount; i++) {
       this.humans.push(new Human({
         row: this,
-        direction: shouldWithChance(0.5) ? -1 : 1,
-        speed: randomNumberBetween(200, 240),
+        d: shouldWithChance(0.5) ? -1 : 1,
+        s: randomNumberBetween(200, 240),
         x: Math.round(randomNumberBetween(-RatioedConstants.humanWidth, GameSettings.c.offsetWidth)),
       }));
     }

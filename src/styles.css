@@ -76,7 +76,6 @@ img {
 
 header>img {
   width: calc(32px + 1vw);
-  height: calc(32px + 1vw);
 }
 
 /* LOADING */
@@ -102,7 +101,7 @@ header>img {
 
 /* UTILITY */
 
-.center {
+.c {
   display: flex;
   justify-content: center;
   align-items: center;

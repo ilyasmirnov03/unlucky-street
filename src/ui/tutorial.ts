@@ -8,15 +8,15 @@ interface TutorialStart {
 }
 
 interface TutorialPart {
-  text: string;
-  left: string;
+  t: string;
+  l: string;
   top: string;
-  center?: boolean;
+  c?: boolean;
 }
 
 export class Tutorial {
 
-  private container: HTMLElement;
+  private c: HTMLElement;
 
   private tutorialWindow: HTMLElement;
 
@@ -24,56 +24,61 @@ export class Tutorial {
 
   private tutorialParts: TutorialPart[] = [
     {
-      text: 'You play as a black cat crossing the street.',
-      left: '50%',
+      t: 'You play as a black cat crossing a Halloween street.',
+      l: '50%',
       top: '50%',
-      center: true,
+      c: true,
     },
     {
-      text: 'Move with WASD/Arrows on PC. On mobile, move by tapping the left/right button or any place on screen to move upwards. (Note: Movement is disabled in tutorial mode)',
-      left: '50%',
+      t: 'Move with WASD/Arrows (PC). On mobile, tap left/right or any place on the screen to go up. (Disabled in tutorial)',
+      l: '50%',
       top: '50%',
-      center: true,
+      c: true,
     },
     {
-      text: 'Earn points for every human\'s road you cross.',
-      left: '10px',
+      t: 'Your goal is to earn points by crossing peoples\' roads. The closer you are while crossing, the more points!',
+      l: '10px',
       top: '20%',
     },
     {
-      text: 'Obstacles block your path, you must find another way around.',
-      left: '10px',
+      t: 'Cross close to humans to have a chance of them dropping fish crackers. +1 happiness each!',
+      l: '10px',
       top: '30%',
     },
     {
-      text: 'You start with 9 happiness. Each bump with a human costs 1. At 0, your cat gets annoyed and quits.',
-      left: '10px',
-      top: '10%',
-    },
-    {
-      text: 'After a bump, you’re briefly invincible - use it to your advantage!',
-      left: '10px',
-      top: '10%',
-    },
-    {
-      text: 'That’s it. Good luck!',
-      left: '50%',
+      t: 'Obstacles block path — find another way.',
+      l: '10px',
       top: '40%',
-      center: true,
-    }
+    },
+    {
+      t: 'Your cat starts with 9 happiness. Each time it bumps into a human, it loses 1. At 0, your cat gets annoyed and quits.',
+      l: '10px',
+      top: '10%',
+    },
+    {
+      t: 'After a bump, you’re briefly invincible — use it!',
+      l: '10px',
+      top: '10%',
+    },
+    {
+      t: 'That’s it. Good luck! ;)',
+      l: '50%',
+      top: '40%',
+      c: true,
+    },
   ];
 
   private currentPositionIndex = 0;
 
   public init(gameMap: GameMap, player: Player, gameLoop: GameLoop): TutorialStart {
-    this.container = getById('t');
+    this.c = getById('t');
     this.tutorialWindow = getById('t-window');
     this.tutorialText = getById('t-text');
 
     this.tutorialWindow.querySelector('button')?.addEventListener('click', () => {
       this.currentPositionIndex++;
       if (this.currentPositionIndex === this.tutorialParts.length) {
-        this.container.style.display = '';
+        this.c.style.display = '';
         this.currentPositionIndex = 0;
         return;
       }
@@ -82,7 +87,7 @@ export class Tutorial {
 
     return {
       start: (): void => {
-        this.container.style.display = 'block';
+        this.c.style.display = 'block';
         gameLoop.start(player, gameMap);
         this._setWindowState(this.currentPositionIndex);
       }
@@ -91,10 +96,10 @@ export class Tutorial {
 
   private _setWindowState(index: number): void {
     const part = this.tutorialParts[index];
-    this.tutorialWindow.style.left = part.left;
+    this.tutorialWindow.style.left = part.l;
     this.tutorialWindow.style.top = part.top;
-    this.tutorialText.textContent = part.text;
-    if (part.center) {
+    this.tutorialText.textContent = part.t;
+    if (part.c) {
       this.tutorialWindow.style.transform = 'translateX(-50%)';
     } else {
       this.tutorialWindow.style.transform = '';

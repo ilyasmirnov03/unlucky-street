@@ -6,13 +6,13 @@ import { getById } from "../core/dom-utils";
 
 export class DeathScreen {
 
-  private static container: HTMLElement;
+  private static c: HTMLElement;
 
   public static init(gameLoop: GameLoop): void {
-    this.container = getById('death-screen');
+    this.c = getById('death-screen');
 
     // Restart button
-    this.container.querySelector('button')?.addEventListener('click', () => {
+    this.c.querySelector('button')?.addEventListener('click', () => {
       Score.addScore(0, true);
       const gameMap = new GameMap();
       const player = new Player(gameMap, gameLoop);
@@ -23,11 +23,11 @@ export class DeathScreen {
   }
 
   public static show(): void {
-    this.container.style.display = 'flex';
+    this.c.style.display = 'flex';
     getById('final-score').textContent = Score.getScore().toString();
   }
 
   public static hide(): void {
-    this.container.style.display = 'none';
+    this.c.style.display = 'none';
   }
 }

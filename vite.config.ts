@@ -8,6 +8,12 @@ export default defineConfig({
     ViteMinifyPlugin({}),
   ],
   build: {
+    rollupOptions: {
+      external: [
+        'banner.png',
+        'icon.png',
+      ],
+    },
     modulePreload: false,
     minify: "terser",
     terserOptions: {

@@ -6,10 +6,10 @@ import { Tutorial } from "./tutorial";
 
 export class StartMenu {
 
-  private static container: HTMLElement;
+  private static c: HTMLElement;
 
   public static init(gameLoop: GameLoop): void {
-    this.container = getById('start-menu');
+    this.c = getById('start-menu');
 
     // Initial map settings with initial render
     const gameMap = new GameMap();
@@ -33,11 +33,11 @@ export class StartMenu {
   }
 
   public static show(): void {
-    this.container.style.display = 'flex';
+    this.c.style.display = 'flex';
   }
 
   public static hide(): void {
-    this.container.style.display = 'none';
+    this.c.style.display = 'none';
   }
 }
 

@@ -8,8 +8,16 @@ import { TiledRow } from "./tiled-row";
 
 interface HumanInterface {
   row: TiledRow;
-  direction: -1 | 1;
-  speed: number;
+
+  /**
+   * Direciton (where they're looking)
+   */
+  d: -1 | 1;
+
+  /**
+   * Speed
+   */
+  s: number;
   x: number;
 }
 
@@ -25,7 +33,10 @@ export class Human extends Sprite {
 
   public row: TiledRow;
 
-  private speed: number;
+  /**
+   * Human's speed
+   */
+  private s: number;
 
   private directionDecisionInterval: number;
 
@@ -36,8 +47,8 @@ export class Human extends Sprite {
   public constructor(humanObj: HumanInterface) {
     super();
     this.row = humanObj.row;
-    this.direction = humanObj.direction;
-    this.speed = humanObj.speed * GameSettings.ratio;
+    this.direction = humanObj.d;
+    this.s = humanObj.s * GameSettings.ratio;
     this.x = humanObj.x;
 
     this.hat = ImageStorage.humanImages.get(`hat${Math.round(randomNumberBetween(1, 4))}`) as HTMLImageElement;
@@ -72,7 +83,7 @@ export class Human extends Sprite {
       return;
     }
 
-    const nextX = this.x + this.direction * this.speed * dt;
+    const nextX = this.x + this.direction * this.s * dt;
 
     // Screen collisions
     if (nextX >= -this.spriteWidth && nextX <= GameSettings.c.offsetWidth) {

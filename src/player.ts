@@ -20,7 +20,10 @@ export class Player extends Sprite {
 
   private pressedKeys = new Set<'left' | 'right'>();
 
-  private speed = 250 * GameSettings.ratio;
+  /**
+   * Player's speed
+   */
+  private s = 250 * GameSettings.ratio;
 
   private isInvincible = false;
 
@@ -35,7 +38,7 @@ export class Player extends Sprite {
   /**
    * Player's alpha state, used for invincibility animation
    */
-  private alpha = 1;
+  private a = 1;
 
   constructor(gameMap: GameMap, gameLoop: GameLoop) {
     super();
@@ -75,7 +78,7 @@ export class Player extends Sprite {
 
     GameSettings.ctx.save();
 
-    GameSettings.ctx.globalAlpha = this.alpha;
+    GameSettings.ctx.globalAlpha = this.a;
 
     if (this.pressedKeys.has('left')) {
       GameSettings.ctx.scale(-1, 1);
@@ -98,7 +101,7 @@ export class Player extends Sprite {
       dx += 1;
     }
 
-    const nextX = this.x + dx * this.speed * dt;
+    const nextX = this.x + dx * this.s * dt;
     if (this.gameMap.currentRow?.isIntersectingWithCandy(nextX)) {
       console.debug('[CANDY] Player has eaten a candy');
       this.gameMap.currentRow.removeCandy();
@@ -126,7 +129,7 @@ export class Player extends Sprite {
       this.isInvincible = true;
       this.setupInvincibleAnimation();
       setTimeout(() => {
-        this.alpha = 1;
+        this.a = 1;
         this.isInvincible = false
         clearInterval(this.invincibleAnimationInterval);
       }, 1000);
@@ -144,7 +147,7 @@ export class Player extends Sprite {
   private setupInvincibleAnimation(): void {
     let factor = -0.5;
     this.invincibleAnimationInterval = setInterval(() => {
-      this.alpha += factor;
+      this.a += factor;
       factor *= -1;
     }, 100);
   }
