@@ -1,9 +1,8 @@
 import { execSync } from "child_process";
 import * as fs from "fs";
-import * as path from "path";
+import * as path from 'path';
 
-const folder = path.resolve("./dist");
-const output = path.resolve("./dist.zip");
+const output = path.join(process.cwd(), 'dist.zip');
 
 const LIMIT = 13 * 1024; // 13 KB in bytes
 
@@ -16,7 +15,8 @@ if (args.includes('save-zip')) {
 
 try {
   // Create the zip archive (overwrite if exists)
-  execSync(`zip -r -q ${output} ${folder}`, { stdio: "inherit" });
+  const command = `zip -r ${output} assets index.html`;
+  execSync(command, { cwd: path.join(process.cwd(), 'dist') });
 
   // Check the size of the archive
   const stats = fs.statSync(output);
